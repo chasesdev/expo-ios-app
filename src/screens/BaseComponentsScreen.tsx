@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, ScrollView, Text as RNText } from 'react-native';
-import { Host, VStack, HStack, Button, Text, Switch, Slider, TextField, SecureField, Picker, DatePicker, ColorPicker } from '@expo/ui/swift-ui';
+import { Host, VStack, HStack, Button, Text, Switch, Slider, TextField, SecureField, Picker, DatePicker, ColorPicker, List, Section, Form, DisclosureGroup, LabeledContent, Progress, Divider, ContentUnavailableView, ShareLink, BottomSheet } from '@expo/ui/swift-ui';
 import { useTheme } from '../design-system';
 import { GlassCard, GlassButton } from '../components/ui/glass';
 import { Card } from '../components/ui/Card';
@@ -23,6 +23,15 @@ export function BaseComponentsScreen() {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedColor, setSelectedColor] = useState('#007AFF');
 
+  // Form states
+  const [formName, setFormName] = useState('');
+  const [formEmail, setFormEmail] = useState('');
+  const [disclosureExpanded, setDisclosureExpanded] = useState(false);
+
+  // Advanced component states
+  const [showBottomSheet, setShowBottomSheet] = useState(false);
+  const [progressValue, setProgressValue] = useState(0.65);
+
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.background.rgb }]}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
@@ -41,6 +50,9 @@ export function BaseComponentsScreen() {
             {/* Glass Effects Section - NEW! */}
             <VStack spacing={16}>
               <RNText style={{ fontSize: 20, fontWeight: '600', lineHeight: 26, marginBottom: 8, color: theme.colors.foreground.rgb }}>Glass Effects ✨</RNText>
+              <Text style={{ fontSize: 14, opacity: 0.7, marginBottom: 4 }}>
+                iOS 26 glass morphism with 6 material variants: ultraThin, thin, regular, thick, ultraThick, and bar
+              </Text>
 
               {/* Accessibility Status */}
               {reduceTransparency && (
@@ -105,6 +117,24 @@ export function BaseComponentsScreen() {
                         Heavy blur, strong separation (30px)
                       </RNText>
                     </GlassCard>
+
+                    <GlassCard variant="ultraThick">
+                      <RNText style={{ color: theme.colors.foreground.rgb, fontSize: 16, fontWeight: '600' }}>
+                        Ultra Thick Material
+                      </RNText>
+                      <RNText style={{ color: theme.colors.mutedForeground.rgb, fontSize: 14, marginTop: 4 }}>
+                        Maximum blur, maximum separation
+                      </RNText>
+                    </GlassCard>
+
+                    <GlassCard variant="bar">
+                      <RNText style={{ color: theme.colors.foreground.rgb, fontSize: 16, fontWeight: '600' }}>
+                        Bar Material
+                      </RNText>
+                      <RNText style={{ color: theme.colors.mutedForeground.rgb, fontSize: 14, marginTop: 4 }}>
+                        Optimized for navigation bars and toolbars
+                      </RNText>
+                    </GlassCard>
                   </>
                 ) : (
                   <Card>
@@ -153,19 +183,35 @@ export function BaseComponentsScreen() {
             {/* Standard Buttons */}
             <VStack spacing={16}>
               <RNText style={{ fontSize: 20, fontWeight: '600', lineHeight: 26, marginBottom: 8, color: theme.colors.foreground.rgb }}>Standard Buttons</RNText>
+              <Text style={{ fontSize: 14, opacity: 0.7, marginBottom: 4 }}>
+                Native SwiftUI button variants
+              </Text>
               <VStack spacing={12}>
-                <Button variant="default" onPress={() => console.log('Default pressed')}>
-                  Default Button
-                </Button>
-                <Button variant="bordered" onPress={() => console.log('Bordered pressed')}>
-                  Bordered Button
-                </Button>
+                <HStack spacing={12}>
+                  <Button variant="default" onPress={() => console.log('Default pressed')} style={{ flex: 1 }}>
+                    Default
+                  </Button>
+                  <Button variant="bordered" onPress={() => console.log('Bordered pressed')} style={{ flex: 1 }}>
+                    Bordered
+                  </Button>
+                </HStack>
+                <HStack spacing={12}>
+                  <Button variant="borderless" onPress={() => console.log('Borderless pressed')} style={{ flex: 1 }}>
+                    Borderless
+                  </Button>
+                  <Button variant="plain" onPress={() => console.log('Plain pressed')} style={{ flex: 1 }}>
+                    Plain
+                  </Button>
+                </HStack>
               </VStack>
             </VStack>
 
             {/* Switches & Toggles */}
             <VStack spacing={16}>
-              <RNText style={{ fontSize: 20, fontWeight: '600', lineHeight: 26, marginBottom: 8, color: theme.colors.foreground.rgb }}>Switches</RNText>
+              <RNText style={{ fontSize: 20, fontWeight: '600', lineHeight: 26, marginBottom: 8, color: theme.colors.foreground.rgb }}>Switches & Toggles</RNText>
+              <Text style={{ fontSize: 14, opacity: 0.7, marginBottom: 4 }}>
+                Interactive toggle controls with multiple variants
+              </Text>
               <VStack spacing={12}>
                 <Switch
                   value={switchValue}
@@ -185,6 +231,9 @@ export function BaseComponentsScreen() {
             {/* Slider */}
             <VStack spacing={16}>
               <RNText style={{ fontSize: 20, fontWeight: '600', lineHeight: 26, marginBottom: 8, color: theme.colors.foreground.rgb }}>Slider</RNText>
+              <Text style={{ fontSize: 14, opacity: 0.7, marginBottom: 4 }}>
+                Continuous value selection
+              </Text>
               <Slider
                 value={sliderValue}
                 onValueChange={setSliderValue}
@@ -194,19 +243,323 @@ export function BaseComponentsScreen() {
               </Text>
             </VStack>
 
-            {/* More components coming soon */}
+            {/* Text Inputs */}
+            <VStack spacing={16}>
+              <RNText style={{ fontSize: 20, fontWeight: '600', lineHeight: 26, marginBottom: 8, color: theme.colors.foreground.rgb }}>Text Inputs</RNText>
+              <Text style={{ fontSize: 14, opacity: 0.7, marginBottom: 4 }}>
+                Native text fields with various keyboard types and secure input
+              </Text>
+              <VStack spacing={12}>
+                <VStack spacing={4}>
+                  <Text style={{ fontSize: 14, fontWeight: '500', opacity: 0.8 }}>
+                    Basic Text Field
+                  </Text>
+                  <TextField
+                    value={textFieldValue}
+                    onValueChange={setTextFieldValue}
+                    placeholder="Enter text here..."
+                  />
+                </VStack>
+
+                <VStack spacing={4}>
+                  <Text style={{ fontSize: 14, fontWeight: '500', opacity: 0.8 }}>
+                    Email Field
+                  </Text>
+                  <TextField
+                    value={emailValue}
+                    onValueChange={setEmailValue}
+                    placeholder="your@email.com"
+                    textContentType="emailAddress"
+                    keyboardType="emailAddress"
+                    autocapitalizationType="none"
+                  />
+                </VStack>
+
+                <VStack spacing={4}>
+                  <Text style={{ fontSize: 14, fontWeight: '500', opacity: 0.8 }}>
+                    Secure Field (Password)
+                  </Text>
+                  <SecureField
+                    value={passwordValue}
+                    onValueChange={setPasswordValue}
+                    placeholder="Enter password..."
+                  />
+                </VStack>
+              </VStack>
+            </VStack>
+
+            {/* Selection Components */}
+            <VStack spacing={16}>
+              <RNText style={{ fontSize: 20, fontWeight: '600', lineHeight: 26, marginBottom: 8, color: theme.colors.foreground.rgb }}>Selection Components</RNText>
+              <Text style={{ fontSize: 14, opacity: 0.7, marginBottom: 4 }}>
+                Pickers for values, dates, and colors
+              </Text>
+              <VStack spacing={12}>
+                <VStack spacing={4}>
+                  <Text style={{ fontSize: 14, fontWeight: '500', opacity: 0.8 }}>
+                    Picker (Menu Style)
+                  </Text>
+                  <Picker
+                    selection={selectedFruit}
+                    onSelectionChange={setSelectedFruit}
+                    label="Choose a fruit"
+                  >
+                    <Picker.Item value="apple" label="Apple 🍎" />
+                    <Picker.Item value="banana" label="Banana 🍌" />
+                    <Picker.Item value="orange" label="Orange 🍊" />
+                    <Picker.Item value="grape" label="Grape 🍇" />
+                    <Picker.Item value="watermelon" label="Watermelon 🍉" />
+                  </Picker>
+                  <Text style={{ fontSize: 12, opacity: 0.6 }}>
+                    Selected: {selectedFruit}
+                  </Text>
+                </VStack>
+
+                <VStack spacing={4}>
+                  <Text style={{ fontSize: 14, fontWeight: '500', opacity: 0.8 }}>
+                    Date Picker
+                  </Text>
+                  <DatePicker
+                    selection={selectedDate}
+                    onSelectionChange={setSelectedDate}
+                    displayedComponents={['date', 'hourAndMinute']}
+                  />
+                  <Text style={{ fontSize: 12, opacity: 0.6 }}>
+                    Selected: {selectedDate.toLocaleString()}
+                  </Text>
+                </VStack>
+
+                <VStack spacing={4}>
+                  <Text style={{ fontSize: 14, fontWeight: '500', opacity: 0.8 }}>
+                    Color Picker
+                  </Text>
+                  <ColorPicker
+                    selection={selectedColor}
+                    onSelectionChange={setSelectedColor}
+                  />
+                  <HStack spacing={8} style={{ alignItems: 'center' }}>
+                    <View style={{ width: 40, height: 40, backgroundColor: selectedColor, borderRadius: 8, borderWidth: 1, borderColor: theme.colors.border.rgb }} />
+                    <Text style={{ fontSize: 12, opacity: 0.6 }}>
+                      {selectedColor}
+                    </Text>
+                  </HStack>
+                </VStack>
+              </VStack>
+            </VStack>
+
+            {/* Lists & Forms */}
+            <VStack spacing={16}>
+              <RNText style={{ fontSize: 20, fontWeight: '600', lineHeight: 26, marginBottom: 8, color: theme.colors.foreground.rgb }}>Lists & Forms</RNText>
+              <Text style={{ fontSize: 14, opacity: 0.7, marginBottom: 4 }}>
+                Structured data display with sections and form layouts
+              </Text>
+              <VStack spacing={12}>
+                <VStack spacing={4}>
+                  <Text style={{ fontSize: 14, fontWeight: '500', opacity: 0.8 }}>
+                    List with Sections
+                  </Text>
+                  <Card>
+                    <List>
+                      <Section header="Fruits">
+                        <List.Row>
+                          <Text>Apple 🍎</Text>
+                        </List.Row>
+                        <List.Row>
+                          <Text>Banana 🍌</Text>
+                        </List.Row>
+                        <List.Row>
+                          <Text>Orange 🍊</Text>
+                        </List.Row>
+                      </Section>
+                      <Section header="Vegetables">
+                        <List.Row>
+                          <Text>Carrot 🥕</Text>
+                        </List.Row>
+                        <List.Row>
+                          <Text>Broccoli 🥦</Text>
+                        </List.Row>
+                      </Section>
+                    </List>
+                  </Card>
+                </VStack>
+
+                <VStack spacing={4}>
+                  <Text style={{ fontSize: 14, fontWeight: '500', opacity: 0.8 }}>
+                    Form Example
+                  </Text>
+                  <Card>
+                    <Form>
+                      <Section header="Profile Information">
+                        <LabeledContent label="Name">
+                          <TextField
+                            value={formName}
+                            onValueChange={setFormName}
+                            placeholder="Enter your name"
+                          />
+                        </LabeledContent>
+                        <LabeledContent label="Email">
+                          <TextField
+                            value={formEmail}
+                            onValueChange={setFormEmail}
+                            placeholder="your@email.com"
+                            keyboardType="emailAddress"
+                          />
+                        </LabeledContent>
+                      </Section>
+                    </Form>
+                  </Card>
+                </VStack>
+
+                <VStack spacing={4}>
+                  <Text style={{ fontSize: 14, fontWeight: '500', opacity: 0.8 }}>
+                    Disclosure Group (Collapsible)
+                  </Text>
+                  <Card>
+                    <DisclosureGroup
+                      isExpanded={disclosureExpanded}
+                      onToggle={() => setDisclosureExpanded(!disclosureExpanded)}
+                      label="Advanced Settings"
+                    >
+                      <VStack spacing={8} style={{ padding: 12 }}>
+                        <Text style={{ fontSize: 14 }}>
+                          Hidden content that appears when expanded
+                        </Text>
+                        <Switch
+                          value={switchValue}
+                          onValueChange={setSwitchValue}
+                          label="Enable feature"
+                          variant="switch"
+                        />
+                      </VStack>
+                    </DisclosureGroup>
+                  </Card>
+                </VStack>
+              </VStack>
+            </VStack>
+
+            {/* Advanced Components */}
+            <VStack spacing={16}>
+              <RNText style={{ fontSize: 20, fontWeight: '600', lineHeight: 26, marginBottom: 8, color: theme.colors.foreground.rgb }}>Advanced Components</RNText>
+              <Text style={{ fontSize: 14, opacity: 0.7, marginBottom: 4 }}>
+                Progress indicators, sheets, sharing, and empty states
+              </Text>
+              <VStack spacing={12}>
+                <VStack spacing={4}>
+                  <Text style={{ fontSize: 14, fontWeight: '500', opacity: 0.8 }}>
+                    Progress Indicator
+                  </Text>
+                  <Progress value={progressValue} />
+                  <HStack spacing={8}>
+                    <Button
+                      variant="bordered"
+                      onPress={() => setProgressValue(Math.max(0, progressValue - 0.1))}
+                    >
+                      -
+                    </Button>
+                    <Text style={{ fontSize: 14, opacity: 0.7, flex: 1, textAlign: 'center' }}>
+                      {Math.round(progressValue * 100)}%
+                    </Text>
+                    <Button
+                      variant="bordered"
+                      onPress={() => setProgressValue(Math.min(1, progressValue + 0.1))}
+                    >
+                      +
+                    </Button>
+                  </HStack>
+                </VStack>
+
+                <VStack spacing={4}>
+                  <Text style={{ fontSize: 14, fontWeight: '500', opacity: 0.8 }}>
+                    Divider
+                  </Text>
+                  <Card>
+                    <VStack spacing={0}>
+                      <Text style={{ padding: 12 }}>First Item</Text>
+                      <Divider />
+                      <Text style={{ padding: 12 }}>Second Item</Text>
+                      <Divider />
+                      <Text style={{ padding: 12 }}>Third Item</Text>
+                    </VStack>
+                  </Card>
+                </VStack>
+
+                <VStack spacing={4}>
+                  <Text style={{ fontSize: 14, fontWeight: '500', opacity: 0.8 }}>
+                    Bottom Sheet
+                  </Text>
+                  <Button
+                    variant="default"
+                    onPress={() => setShowBottomSheet(true)}
+                  >
+                    Show Bottom Sheet
+                  </Button>
+                  {showBottomSheet && (
+                    <BottomSheet
+                      isPresented={showBottomSheet}
+                      onDismiss={() => setShowBottomSheet(false)}
+                    >
+                      <VStack spacing={16} style={{ padding: 20 }}>
+                        <Text style={{ fontSize: 24, fontWeight: '600' }}>
+                          Bottom Sheet
+                        </Text>
+                        <Text style={{ fontSize: 16, opacity: 0.8 }}>
+                          This is a modal bottom sheet. It slides up from the bottom of the screen.
+                        </Text>
+                        <Button
+                          variant="default"
+                          onPress={() => setShowBottomSheet(false)}
+                        >
+                          Close
+                        </Button>
+                      </VStack>
+                    </BottomSheet>
+                  )}
+                </VStack>
+
+                <VStack spacing={4}>
+                  <Text style={{ fontSize: 14, fontWeight: '500', opacity: 0.8 }}>
+                    Share Link
+                  </Text>
+                  <ShareLink
+                    item={{ url: 'https://expo.dev' }}
+                  >
+                    <Button variant="bordered">
+                      Share Expo Website
+                    </Button>
+                  </ShareLink>
+                </VStack>
+
+                <VStack spacing={4}>
+                  <Text style={{ fontSize: 14, fontWeight: '500', opacity: 0.8 }}>
+                    Content Unavailable View (Empty State)
+                  </Text>
+                  <Card>
+                    <ContentUnavailableView
+                      title="No Data"
+                      description="There's nothing to show here yet."
+                      systemImage="tray"
+                    />
+                  </Card>
+                </VStack>
+              </VStack>
+            </VStack>
+
+            {/* Additional Info */}
             <VStack spacing={12}>
-              <RNText style={[styles.comingSoon, { color: theme.colors.mutedForeground.rgb }]}>
-                More components coming soon:
-              </RNText>
-              <RNText style={[styles.componentList, { color: theme.colors.mutedForeground.rgb }]}>
-                • Text Fields & Inputs{'\n'}
-                • Date Pickers{'\n'}
-                • Context Menus{'\n'}
-                • Lists & Grids{'\n'}
-                • Progress Indicators{'\n'}
-                • And 40+ more...
-              </RNText>
+              <Card>
+                <VStack spacing={8}>
+                  <RNText style={{ fontSize: 16, fontWeight: '600', color: theme.colors.foreground.rgb }}>
+                    📦 Component Library
+                  </RNText>
+                  <RNText style={{ fontSize: 14, lineHeight: 20, color: theme.colors.mutedForeground.rgb }}>
+                    This screen showcases 20+ base components from @expo/ui/swift-ui. The library includes 49+ native SwiftUI components total, including Charts, Gauges, Shapes, and more advanced features.
+                  </RNText>
+                  <Divider />
+                  <RNText style={{ fontSize: 14, lineHeight: 20, color: theme.colors.mutedForeground.rgb }}>
+                    💡 All components are native iOS SwiftUI views bridged to React Native, providing true native performance and appearance.
+                  </RNText>
+                </VStack>
+              </Card>
             </VStack>
           </VStack>
         </Host>
