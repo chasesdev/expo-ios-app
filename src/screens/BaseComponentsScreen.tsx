@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, ScrollView, Text as RNText } from 'react-native';
-import { Host, VStack, Button, Text, Switch, Slider } from '@expo/ui/swift-ui';
+import { Host, VStack, HStack, Button, Text, Switch, Slider, TextField, SecureField, Picker, DatePicker, ColorPicker } from '@expo/ui/swift-ui';
 import { useTheme } from '../design-system';
 import { GlassCard, GlassButton } from '../components/ui/glass';
 import { Card } from '../components/ui/Card';
@@ -12,6 +12,16 @@ export function BaseComponentsScreen() {
   const [switchValue, setSwitchValue] = useState(false);
   const [sliderValue, setSliderValue] = useState(0.5);
   const [glassEnabled, setGlassEnabled] = useState(true);
+
+  // Text Input states
+  const [textFieldValue, setTextFieldValue] = useState('');
+  const [emailValue, setEmailValue] = useState('');
+  const [passwordValue, setPasswordValue] = useState('');
+
+  // Selection states
+  const [selectedFruit, setSelectedFruit] = useState('apple');
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedColor, setSelectedColor] = useState('#007AFF');
 
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.background.rgb }]}>
@@ -46,7 +56,7 @@ export function BaseComponentsScreen() {
 
               {/* Glass Toggle */}
               <Switch
-                checked={glassEnabled}
+                value={glassEnabled}
                 onValueChange={setGlassEnabled}
                 label="Enable Glass Effects"
                 variant="switch"
@@ -158,13 +168,13 @@ export function BaseComponentsScreen() {
               <RNText style={{ fontSize: 20, fontWeight: '600', lineHeight: 26, marginBottom: 8, color: theme.colors.foreground.rgb }}>Switches</RNText>
               <VStack spacing={12}>
                 <Switch
-                  checked={switchValue}
+                  value={switchValue}
                   onValueChange={setSwitchValue}
                   label="Toggle Switch"
                   variant="switch"
                 />
                 <Switch
-                  checked={switchValue}
+                  value={switchValue}
                   onValueChange={setSwitchValue}
                   label="Checkbox"
                   variant="checkbox"
