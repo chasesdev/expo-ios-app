@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "AISDKUI.app"
-               BlueprintName = "AISDKUI"
-               ReferencedContainer = "container:AISDKUI.xcodeproj">
+               BuildableName = "expoiosapp.app"
+               BlueprintName = "expoiosapp"
+               ReferencedContainer = "container:expoiosapp.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "AISDKUITests.xctest"
-               BlueprintName = "AISDKUITests"
-               ReferencedContainer = "container:AISDKUI.xcodeproj">
+               BuildableName = "expoiosappTests.xctest"
+               BlueprintName = "expoiosappTests"
+               ReferencedContainer = "container:expoiosapp.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "AISDKUI.app"
-            BlueprintName = "AISDKUI"
-            ReferencedContainer = "container:AISDKUI.xcodeproj">
+            BuildableName = "expoiosapp.app"
+            BlueprintName = "expoiosapp"
+            ReferencedContainer = "container:expoiosapp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "AISDKUI.app"
-            BlueprintName = "AISDKUI"
-            ReferencedContainer = "container:AISDKUI.xcodeproj">
+            BuildableName = "expoiosapp.app"
+            BlueprintName = "expoiosapp"
+            ReferencedContainer = "container:expoiosapp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

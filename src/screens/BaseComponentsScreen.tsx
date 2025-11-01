@@ -82,7 +82,7 @@ export function BaseComponentsScreen() {
 
                 {glassEnabled && shouldUseGlass ? (
                   <>
-                    <GlassCard variant="ultraThin">
+                    <GlassCard variant="ultraThin" style={{ alignSelf: 'stretch' }}>
                       <RNText style={{ color: theme.colors.foreground.rgb, fontSize: 16, fontWeight: '600' }}>
                         Ultra Thin Material
                       </RNText>
@@ -91,7 +91,7 @@ export function BaseComponentsScreen() {
                       </RNText>
                     </GlassCard>
 
-                    <GlassCard variant="thin">
+                    <GlassCard variant="thin" style={{ alignSelf: 'stretch' }}>
                       <RNText style={{ color: theme.colors.foreground.rgb, fontSize: 16, fontWeight: '600' }}>
                         Thin Material
                       </RNText>
@@ -100,7 +100,7 @@ export function BaseComponentsScreen() {
                       </RNText>
                     </GlassCard>
 
-                    <GlassCard variant="regular">
+                    <GlassCard variant="regular" style={{ alignSelf: 'stretch' }}>
                       <RNText style={{ color: theme.colors.foreground.rgb, fontSize: 16, fontWeight: '600' }}>
                         Regular Material
                       </RNText>
@@ -109,7 +109,7 @@ export function BaseComponentsScreen() {
                       </RNText>
                     </GlassCard>
 
-                    <GlassCard variant="thick">
+                    <GlassCard variant="thick" style={{ alignSelf: 'stretch' }}>
                       <RNText style={{ color: theme.colors.foreground.rgb, fontSize: 16, fontWeight: '600' }}>
                         Thick Material
                       </RNText>
@@ -118,7 +118,7 @@ export function BaseComponentsScreen() {
                       </RNText>
                     </GlassCard>
 
-                    <GlassCard variant="ultraThick">
+                    <GlassCard variant="ultraThick" style={{ alignSelf: 'stretch' }}>
                       <RNText style={{ color: theme.colors.foreground.rgb, fontSize: 16, fontWeight: '600' }}>
                         Ultra Thick Material
                       </RNText>
@@ -127,7 +127,7 @@ export function BaseComponentsScreen() {
                       </RNText>
                     </GlassCard>
 
-                    <GlassCard variant="bar">
+                    <GlassCard variant="bar" style={{ alignSelf: 'stretch' }}>
                       <RNText style={{ color: theme.colors.foreground.rgb, fontSize: 16, fontWeight: '600' }}>
                         Bar Material
                       </RNText>
@@ -160,16 +160,19 @@ export function BaseComponentsScreen() {
                       title="Primary Glass Button"
                       style="primary"
                       onPress={() => console.log('Primary pressed')}
+                      buttonStyle={{ alignSelf: 'stretch' }}
                     />
                     <GlassButton
                       title="Secondary Glass Button"
                       style="secondary"
                       onPress={() => console.log('Secondary pressed')}
+                      buttonStyle={{ alignSelf: 'stretch' }}
                     />
                     <GlassButton
                       title="Ghost Glass Button"
                       style="ghost"
                       onPress={() => console.log('Ghost pressed')}
+                      buttonStyle={{ alignSelf: 'stretch' }}
                     />
                   </>
                 ) : (

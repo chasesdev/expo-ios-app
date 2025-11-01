@@ -50,3 +50,30 @@ export type { OpenInChatProps } from './OpenInChat';
 // Terminal/VCR Component (Phase 3 - Bonus)
 export { Terminal, exampleRecordings } from './Terminal';
 export type { TerminalProps, TerminalRecording, TerminalFrame, TerminalFrameType } from './Terminal';
+
+// Planning & Reasoning Components (Phase 4)
+export { Plan, examplePlans } from './Plan';
+export type { PlanProps, PlanData, PlanStep } from './Plan';
+
+export { Task, exampleTasks } from './Task';
+export type { TaskProps, TaskData, TaskStatus, TaskPriority } from './Task';
+
+export { ChainOfThought, exampleChainOfThought } from './ChainOfThought';
+export type { ChainOfThoughtProps, ChainOfThoughtData, ThoughtStep } from './ChainOfThought';
+
+export { Reasoning, exampleReasoning } from './Reasoning';
+export type { ReasoningProps, ReasoningData } from './Reasoning';
+
+// Workflow Components (Phase 4 - Complete Interactive Editor)
+export { WorkflowPlanner, WorkflowNode, WorkflowEdge, exampleWorkflow, exampleNodes, exampleEdges } from './workflow';
+export type {
+  WorkflowData,
+  NodeData,
+  EdgeData,
+  NodeType,
+  NodeStatus,
+  EdgeType,
+  Position,
+  Handle,
+  Connection,
+} from './workflow';
