@@ -77,7 +77,7 @@ struct GlassModal<Content: View>: View {
                 }
             }
             .background(.thickMaterial)
-            .cornerRadius(DesignSystem.Radius.xl)
+            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.Radius.xl))
             .overlay(
                 RoundedRectangle(cornerRadius: DesignSystem.Radius.xl)
                     .stroke(Color.border(colorScheme).opacity(0.3), lineWidth: 1)
@@ -88,7 +88,7 @@ struct GlassModal<Content: View>: View {
                 x: 0,
                 y: 10
             )
-            .padding(32)
+            .padding(DesignSystem.Spacing.xl)
             .transition(.scale.combined(with: .opacity))
             .compositingGroup()
         }
@@ -177,9 +177,10 @@ struct GlassAlert<Content: View>: View {
                 }
             }
             .padding(DesignSystem.Spacing.lg)
-            .frame(maxWidth: 320)
+            .frame(maxWidth: 400)
+            .frame(minWidth: 280)
             .background(.thickMaterial)
-            .cornerRadius(DesignSystem.Radius.xl)
+            .clipShape(RoundedRectangle(cornerRadius: DesignSystem.Radius.xl))
             .overlay(
                 RoundedRectangle(cornerRadius: DesignSystem.Radius.xl)
                     .stroke(Color.border(colorScheme).opacity(0.3), lineWidth: 1)

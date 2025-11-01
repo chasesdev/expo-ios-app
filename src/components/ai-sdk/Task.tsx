@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Text as RNText, TouchableOpacity } from 'react-native';
-import { Host, VStack, HStack } from '@expo/ui/swift-ui';
+import { VStack, HStack } from '@expo/ui/swift-ui';
+import { Host } from '../common/SwiftUIHost';
 import { useTheme } from '../../design-system';
 
 export type TaskStatus = 'todo' | 'in_progress' | 'completed' | 'blocked' | 'cancelled';

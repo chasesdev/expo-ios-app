@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Text as RNText, View } from 'react-native';
-import { Host, HStack, Text } from '@expo/ui/swift-ui';
+import { HStack, Text } from '@expo/ui/swift-ui';
+import { Host } from '../../common/SwiftUIHost';
 import { useTheme } from '../../../design-system';
 import { glassTokens, opacityToHex } from '../../../design-system/glass-tokens';
 
@@ -14,6 +15,7 @@ export interface GlassButtonProps {
   fullWidth?: boolean;
   disabled?: boolean;
   testID?: string;
+  buttonStyle?: any; // Custom style overrides
 }
 
 /**
@@ -36,6 +38,7 @@ export function GlassButton({
   fullWidth = false,
   disabled = false,
   testID,
+  buttonStyle,
 }: GlassButtonProps) {
   const theme = useTheme();
   const [isPressed, setIsPressed] = useState(false);
@@ -124,6 +127,7 @@ export function GlassButton({
         paddingVertical: theme.spacing.sm,
         ...(fullWidth ? { width: '100%' } : {}),
         opacity: disabled ? 0.5 : 1,
+        ...buttonStyle,
       }}
       onTouchStart={() => setIsPressed(true)}
       onTouchEnd={() => setIsPressed(false)}

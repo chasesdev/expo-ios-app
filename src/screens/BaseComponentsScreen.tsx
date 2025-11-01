@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, ScrollView, Text as RNText } from 'react-native';
-import { Host, VStack, HStack, Button, Text, Switch, Slider, TextField, SecureField, Picker, DatePicker, ColorPicker, List, Section, Form, DisclosureGroup, LabeledContent, Progress, Divider, ContentUnavailableView, ShareLink, BottomSheet } from '@expo/ui/swift-ui';
+import { VStack, HStack, Button, Text, Switch, Slider, TextField, SecureField, Picker, DateTimePicker, ColorPicker, List, Section, Form, DisclosureGroup, LabeledContent, Progress, Divider, ContentUnavailableView, ShareLink, BottomSheet } from '@expo/ui/swift-ui';
+import { Host } from '../components/common/SwiftUIHost';
 import { useTheme } from '../design-system';
 import { GlassCard, GlassButton } from '../components/ui/glass';
 import { Card } from '../components/ui/Card';
@@ -19,7 +20,7 @@ export function BaseComponentsScreen() {
   const [passwordValue, setPasswordValue] = useState('');
 
   // Selection states
-  const [selectedFruit, setSelectedFruit] = useState('apple');
+  const [selectedFruit, setSelectedFruit] = useState(0);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedColor, setSelectedColor] = useState('#007AFF');
 
@@ -303,18 +304,14 @@ export function BaseComponentsScreen() {
                     Picker (Menu Style)
                   </Text>
                   <Picker
-                    selection={selectedFruit}
-                    onSelectionChange={setSelectedFruit}
+                    options={['Apple 🍎', 'Banana 🍌', 'Orange 🍊', 'Grape 🍇', 'Watermelon 🍉']}
+                    selectedIndex={selectedFruit}
+                    onOptionSelected={(e) => setSelectedFruit(e.nativeEvent.index)}
                     label="Choose a fruit"
-                  >
-                    <Picker.Item value="apple" label="Apple 🍎" />
-                    <Picker.Item value="banana" label="Banana 🍌" />
-                    <Picker.Item value="orange" label="Orange 🍊" />
-                    <Picker.Item value="grape" label="Grape 🍇" />
-                    <Picker.Item value="watermelon" label="Watermelon 🍉" />
-                  </Picker>
+                    variant="menu"
+                  />
                   <Text style={{ fontSize: 12, opacity: 0.6 }}>
-                    Selected: {selectedFruit}
+                    Selected index: {selectedFruit}
                   </Text>
                 </VStack>
 
@@ -322,10 +319,10 @@ export function BaseComponentsScreen() {
                   <Text style={{ fontSize: 14, fontWeight: '500', opacity: 0.8 }}>
                     Date Picker
                   </Text>
-                  <DatePicker
-                    selection={selectedDate}
-                    onSelectionChange={setSelectedDate}
-                    displayedComponents={['date', 'hourAndMinute']}
+                  <DateTimePicker
+                    initialDate={selectedDate.toISOString()}
+                    onDateSelected={setSelectedDate}
+                    displayedComponents="dateAndTime"
                   />
                   <Text style={{ fontSize: 12, opacity: 0.6 }}>
                     Selected: {selectedDate.toLocaleString()}
@@ -338,7 +335,8 @@ export function BaseComponentsScreen() {
                   </Text>
                   <ColorPicker
                     selection={selectedColor}
-                    onSelectionChange={setSelectedColor}
+                    onValueChanged={setSelectedColor}
+                    supportsOpacity
                   />
                   <HStack spacing={8} style={{ alignItems: 'center' }}>
                     <View style={{ width: 40, height: 40, backgroundColor: selectedColor, borderRadius: 8, borderWidth: 1, borderColor: theme.colors.border.rgb }} />
@@ -496,27 +494,25 @@ export function BaseComponentsScreen() {
                   >
                     Show Bottom Sheet
                   </Button>
-                  {showBottomSheet && (
-                    <BottomSheet
-                      isPresented={showBottomSheet}
-                      onDismiss={() => setShowBottomSheet(false)}
-                    >
-                      <VStack spacing={16} style={{ padding: 20 }}>
-                        <Text style={{ fontSize: 24, fontWeight: '600' }}>
-                          Bottom Sheet
-                        </Text>
-                        <Text style={{ fontSize: 16, opacity: 0.8 }}>
-                          This is a modal bottom sheet. It slides up from the bottom of the screen.
-                        </Text>
-                        <Button
-                          variant="default"
-                          onPress={() => setShowBottomSheet(false)}
-                        >
-                          Close
-                        </Button>
-                      </VStack>
-                    </BottomSheet>
-                  )}
+                  <BottomSheet
+                    isOpened={showBottomSheet}
+                    onIsOpenedChange={setShowBottomSheet}
+                  >
+                    <VStack spacing={16} style={{ padding: 20 }}>
+                      <Text style={{ fontSize: 24, fontWeight: '600' }}>
+                        Bottom Sheet
+                      </Text>
+                      <Text style={{ fontSize: 16, opacity: 0.8 }}>
+                        This is a modal bottom sheet. It slides up from the bottom of the screen.
+                      </Text>
+                      <Button
+                        variant="default"
+                        onPress={() => setShowBottomSheet(false)}
+                      >
+                        Close
+                      </Button>
+                    </VStack>
+                  </BottomSheet>
                 </VStack>
 
                 <VStack spacing={4}>
@@ -524,7 +520,8 @@ export function BaseComponentsScreen() {
                     Share Link
                   </Text>
                   <ShareLink
-                    item={{ url: 'https://expo.dev' }}
+                    item="https://expo.dev"
+                    subject="Check out Expo!"
                   >
                     <Button variant="bordered">
                       Share Expo Website

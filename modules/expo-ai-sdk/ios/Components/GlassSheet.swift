@@ -45,11 +45,11 @@ struct GlassSheet<Content: View>: View {
         VStack(spacing: 0) {
             // Drag handle
             if showHandle {
-                RoundedRectangle(cornerRadius: 3)
+                Capsule()
                     .fill(Color.secondary.opacity(0.3))
-                    .frame(width: 36, height: 5)
-                    .padding(.top, 8)
-                    .padding(.bottom, 12)
+                    .frame(width: 40, height: 5)
+                    .padding(.top, DesignSystem.Spacing.xs)
+                    .padding(.bottom, DesignSystem.Spacing.sm)
             }
 
             // Header
@@ -111,7 +111,7 @@ struct GlassSheet<Content: View>: View {
                     title: "Settings",
                     onDismiss: { showSheet = false }
                 ) {
-                    VStack(alignment: .leading, spacing: 16) {
+                    LazyVStack(alignment: .leading, spacing: 16) {
                         ForEach(0..<10) { index in
                             HStack {
                                 Image(systemName: "gearshape")

@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Text as RNText, TouchableOpacity } from 'react-native';
-import { Host, VStack, HStack } from '@expo/ui/swift-ui';
+import { VStack, HStack } from '@expo/ui/swift-ui';
+import { Host } from '../../common/SwiftUIHost';
 import { useTheme } from '../../../design-system';
 import { NodeData, NodeType, NodeStatus } from './types';
 
@@ -108,8 +109,7 @@ export function WorkflowNode({
             transform: node.type === 'decision' ? [{ rotate: '45deg' }] : undefined,
           }}
         >
-          <View style={node.type === 'decision' ? { transform: [{ rotate: '-45deg' }] } : {}}>
-            <VStack spacing={8}>
+          <VStack spacing={8} style={node.type === 'decision' ? { transform: [{ rotate: '-45deg' }] } : {}}>
               {/* Header */}
               <HStack spacing={8} style={{ alignItems: 'center' }}>
                 <RNText style={{ fontSize: 18 }}>{config.icon}</RNText>
@@ -174,7 +174,6 @@ export function WorkflowNode({
                 </HStack>
               )}
             </VStack>
-          </View>
         </Host>
       </TouchableOpacity>
     </View>

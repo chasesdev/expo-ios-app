@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Host, VStack, HStack, Text } from '@expo/ui/swift-ui';
+import { VStack, HStack, Text } from '@expo/ui/swift-ui';
+import { Host } from '../common/SwiftUIHost';
 import { useTheme } from '../../design-system';
 import {
   MaterialVariant,

@@ -32,10 +32,10 @@ struct GlassNavigationBar: View {
                         Image(systemName: leadingIcon)
                             .foregroundColor(Color.foreground(colorScheme))
                             .font(.body.weight(.semibold))
-                            .frame(width: 24, height: 24)
+                            .frame(minWidth: 44, minHeight: 44)
                     }
                 } else {
-                    Spacer().frame(width: 24)
+                    Spacer().frame(width: 44)
                 }
 
                 Spacer()
@@ -53,10 +53,10 @@ struct GlassNavigationBar: View {
                         Image(systemName: trailingIcon)
                             .foregroundColor(Color.foreground(colorScheme))
                             .font(.body.weight(.semibold))
-                            .frame(width: 24, height: 24)
+                            .frame(minWidth: 44, minHeight: 44)
                     }
                 } else {
-                    Spacer().frame(width: 24)
+                    Spacer().frame(width: 44)
                 }
             }
             .padding(.horizontal, DesignSystem.Spacing.md)
@@ -82,7 +82,7 @@ struct GlassNavigationBar: View {
         )
 
         ScrollView {
-            VStack(spacing: 12) {
+            LazyVStack(spacing: 12) {
                 ForEach(0..<20) { index in
                     GlassCard(variant: .ultraThin) {
                         HStack {
@@ -125,8 +125,8 @@ struct GlassNavigationBar: View {
         )
 
         ScrollView {
-            VStack(spacing: 12) {
-                ForEach(0..<20) { index in {
+            LazyVStack(spacing: 12) {
+                ForEach(0..<20) { index in
                     GlassCard(variant: .ultraThin) {
                         HStack {
                             Image(systemName: "gearshape")

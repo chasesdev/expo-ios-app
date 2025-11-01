@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Host, VStack, HStack, Text, Image } from '@expo/ui/swift-ui';
+import { VStack, HStack, Text, Image } from '@expo/ui/swift-ui';
+import { Host } from '../common/SwiftUIHost';
 import { TouchableOpacity, View, TextInput, StyleSheet } from 'react-native';
 import { useTheme } from '../../design-system';
 import {

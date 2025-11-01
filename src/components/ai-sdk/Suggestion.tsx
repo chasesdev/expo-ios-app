@@ -1,5 +1,6 @@
 import React from 'react';
-import { Host, HStack, VStack, Text } from '@expo/ui/swift-ui';
+import { HStack, VStack, Text } from '@expo/ui/swift-ui';
+import { Host } from '../common/SwiftUIHost';
 import { ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '../../design-system';
 import {

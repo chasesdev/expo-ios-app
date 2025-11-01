@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react';
-import { Host, VStack, Text } from '@expo/ui/swift-ui';
+import { VStack, Text } from '@expo/ui/swift-ui';
+import { Host } from '../common/SwiftUIHost';
 import { ScrollView, RefreshControl, KeyboardAvoidingView, Platform, View } from 'react-native';
 import { useTheme } from '../../design-system';
 import { Message, MessageProps } from './Message';

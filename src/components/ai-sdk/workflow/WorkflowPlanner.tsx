@@ -9,7 +9,9 @@ import {
   TouchableOpacity,
   Text as RNText,
 } from 'react-native';
-import { Host, VStack, HStack } from '@expo/ui/swift-ui';
+import Svg, { Defs, Pattern, Rect, Circle, Path } from 'react-native-svg';
+import { VStack, HStack } from '@expo/ui/swift-ui';
+import { Host } from '../../common/SwiftUIHost';
 import { useTheme } from '../../../design-system';
 import { WorkflowNode } from './Node';
 import { WorkflowEdge } from './Edge';
@@ -70,6 +72,8 @@ export function WorkflowPlanner({
   const [draggingNodeId, setDraggingNodeId] = useState<string | null>(null);
   const dragStartPos = useRef<Position>({ x: 0, y: 0 });
   const nodeDragOffset = useRef<Position>({ x: 0, y: 0 });
+  const initialNodePosition = useRef<Position>({ x: 0, y: 0 });
+  const initialViewportPosition = useRef<Position>({ x: 0, y: 0 });
 
   // Connection state
   const [connecting, setConnecting] = useState<{
@@ -86,18 +90,16 @@ export function WorkflowPlanner({
       onPanResponderGrant: (evt: GestureResponderEvent) => {
         const { locationX, locationY } = evt.nativeEvent;
         dragStartPos.current = { x: locationX, y: locationY };
+        initialViewportPosition.current = { x: viewport.x, y: viewport.y };
       },
       onPanResponderMove: (evt: GestureResponderEvent, gestureState: PanResponderGestureState) => {
         if (!editable) return;
 
         if (draggingNodeId) {
-          // Node dragging
-          const node = findNode(nodes, draggingNodeId);
-          if (node) {
-            const newX = node.position.x + gestureState.dx / viewport.zoom;
-            const newY = node.position.y + gestureState.dy / viewport.zoom;
-            updateNodePosition(draggingNodeId, { x: newX, y: newY });
-          }
+          // Node dragging - use initial position plus delta
+          const newX = initialNodePosition.current.x + gestureState.dx / viewport.zoom;
+          const newY = initialNodePosition.current.y + gestureState.dy / viewport.zoom;
+          updateNodePosition(draggingNodeId, { x: newX, y: newY });
         } else if (connecting) {
           // Connection dragging
           const { locationX, locationY } = evt.nativeEvent;
@@ -106,11 +108,11 @@ export function WorkflowPlanner({
             y: (locationY - viewport.y) / viewport.zoom,
           });
         } else {
-          // Canvas panning
+          // Canvas panning - use initial viewport position plus delta
           setViewport(prev => ({
             ...prev,
-            x: prev.x + gestureState.dx,
-            y: prev.y + gestureState.dy,
+            x: initialViewportPosition.current.x + gestureState.dx,
+            y: initialViewportPosition.current.y + gestureState.dy,
           }));
         }
       },
@@ -119,8 +121,25 @@ export function WorkflowPlanner({
           setDraggingNodeId(null);
           emitWorkflowChange();
         }
-        if (connecting) {
-          // Try to complete connection
+        if (connecting && connectionEnd) {
+          // Try to complete connection by finding nearby target handle
+          const targetNode = findNearestNodeHandle(connectionEnd, nodes, connecting.sourceNodeId);
+          if (targetNode) {
+            const newEdge: EdgeData = {
+              id: generateId('edge'),
+              type: 'bezier',
+              source: connecting.sourceNodeId,
+              target: targetNode.nodeId,
+              sourceHandle: connecting.sourceHandle,
+              targetHandle: targetNode.handle,
+              markerEnd: 'arrowClosed',
+            };
+
+            if (isValidConnection(newEdge, nodes, edges)) {
+              setEdges(prev => [...prev, newEdge]);
+              emitWorkflowChange();
+            }
+          }
           setConnecting(null);
           setConnectionEnd(null);
         }
@@ -129,6 +148,32 @@ export function WorkflowPlanner({
   ).current;
 
   // Helper functions
+  const findNearestNodeHandle = (
+    point: Position,
+    nodes: NodeData[],
+    excludeNodeId: string
+  ): { nodeId: string; handle: string } | null => {
+    const threshold = 30; // Distance threshold for snapping to handle
+
+    for (const node of nodes) {
+      if (node.id === excludeNodeId) continue;
+
+      const handles = ['top', 'right', 'bottom', 'left'];
+      for (const handle of handles) {
+        const handlePos = getHandlePosition(node, handle as any);
+        const distance = Math.sqrt(
+          Math.pow(point.x - handlePos.x, 2) + Math.pow(point.y - handlePos.y, 2)
+        );
+
+        if (distance < threshold) {
+          return { nodeId: node.id, handle };
+        }
+      }
+    }
+
+    return null;
+  };
+
   const updateNodePosition = (nodeId: string, position: Position) => {
     setNodes(prev =>
       prev.map(node =>
@@ -281,6 +326,27 @@ export function WorkflowPlanner({
         style={[styles.canvas, { backgroundColor: theme.colors.background.rgb }]}
         {...panResponder.panHandlers}
       >
+        {/* Grid Background (SVG) */}
+        <Svg
+          width={containerWidth}
+          height={containerHeight}
+          style={styles.grid}
+        >
+          <Defs>
+            <Pattern
+              id="grid-pattern"
+              x={viewport.x % 20}
+              y={viewport.y % 20}
+              width={20 * viewport.zoom}
+              height={20 * viewport.zoom}
+              patternUnits="userSpaceOnUse"
+            >
+              <Circle cx={1} cy={1} r={1} fill="#E5E7EB" opacity={0.5} />
+            </Pattern>
+          </Defs>
+          <Rect width="100%" height="100%" fill="url(#grid-pattern)" />
+        </Svg>
+
         <View
           style={[
             styles.viewport,
@@ -293,9 +359,6 @@ export function WorkflowPlanner({
             },
           ]}
         >
-          {/* Grid Background */}
-          <View style={styles.grid} />
-
           {/* Edges */}
           {edges.map(edge => {
             const sourceNode = findNode(nodes, edge.source);
@@ -317,6 +380,31 @@ export function WorkflowPlanner({
             );
           })}
 
+          {/* Active Connection Line */}
+          {connecting && connectionEnd && (() => {
+            const sourceNode = findNode(nodes, connecting.sourceNodeId);
+            if (!sourceNode) return null;
+
+            const sourcePos = getHandlePosition(sourceNode, connecting.sourceHandle as any);
+            const path = `M ${sourcePos.x},${sourcePos.y} L ${connectionEnd.x},${connectionEnd.y}`;
+
+            return (
+              <Svg
+                style={{ position: 'absolute', top: 0, left: 0, width: containerWidth, height: containerHeight, pointerEvents: 'none' }}
+                width={containerWidth}
+                height={containerHeight}
+              >
+                <Path
+                  d={path}
+                  stroke="#3B82F6"
+                  strokeWidth={2}
+                  strokeDasharray="5,5"
+                  fill="none"
+                />
+              </Svg>
+            );
+          })()}
+
           {/* Nodes */}
           {nodes.map(node => (
             <WorkflowNode
@@ -324,15 +412,13 @@ export function WorkflowPlanner({
               node={node}
               selected={node.id === selectedNodeId}
               onPress={() => selectNode(node.id)}
-              onDragStart={() => setDraggingNodeId(node.id)}
+              onDragStart={() => {
+                setDraggingNodeId(node.id);
+                initialNodePosition.current = { ...node.position };
+              }}
               renderHandle={(type, position) => renderHandle(node.id, type, position)}
             />
           ))}
-
-          {/* Active Connection Line */}
-          {connecting && connectionEnd && (
-            <View style={{ position: 'absolute', top: 0, left: 0 }} />
-          )}
         </View>
       </View>
 
@@ -368,8 +454,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundImage: 'radial-gradient(circle, #E5E7EB 1px, transparent 1px)',
-    backgroundSize: '20px 20px',
+    pointerEvents: 'none',
   },
   controls: {
     position: 'absolute',

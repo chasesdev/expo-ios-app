@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView, Text as RNText } from 'react-native';
-import { Host, VStack, HStack, Text } from '@expo/ui/swift-ui';
+import { VStack, HStack, Text } from '@expo/ui/swift-ui';
+import { Host } from '../components/common/SwiftUIHost';
 import { useTheme, tokens, typography, glassTokens, materialVariantNames } from '../design-system';
 import { GlassCard } from '../components/ui/glass';
 import { useGlassOptimization } from '../hooks/useGlassOptimization';

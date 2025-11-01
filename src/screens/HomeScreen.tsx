@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, StyleSheet, ScrollView, Pressable, Text as RNText } from 'react-native';
-import { Host, VStack, Text, Button } from '@expo/ui/swift-ui';
+import { View, StyleSheet, ScrollView, Pressable, Text as RNText, Dimensions } from 'react-native';
+import { VStack, Text, Button } from '@expo/ui/swift-ui';
+import { Host } from '../components/common/SwiftUIHost';
 import { useTheme } from '../design-system';
 import { WorkflowPlanner, exampleWorkflow } from '../components/ai-sdk/workflow';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -12,6 +13,8 @@ type HomeScreenProps = {
 
 export function HomeScreen({ navigation }: HomeScreenProps) {
   const theme = useTheme();
+  const screenWidth = Dimensions.get('window').width;
+  const workflowWidth = Math.min(screenWidth - 40, 750); // Use 90% of screen width, max 750px
 
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.background.rgb }]}>
@@ -39,8 +42,8 @@ export function HomeScreen({ navigation }: HomeScreenProps) {
               <WorkflowPlanner
                 initialWorkflow={exampleWorkflow}
                 editable={true}
-                containerWidth={350}
-                containerHeight={500}
+                containerWidth={workflowWidth}
+                containerHeight={600}
                 onWorkflowChange={(workflow) => console.log('Workflow changed:', workflow)}
               />
             </VStack>

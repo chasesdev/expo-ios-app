@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Animated, StyleSheet } from 'react-native';
-import Svg, { Path, Defs, Marker, Polygon, Circle, G } from 'react-native-svg';
+import Svg, { Path, Defs, Marker, Polygon, Circle, G, Text as SvgText } from 'react-native-svg';
 import { EdgeData, Position, getBezierPath, getStraightPath, getStepPath } from './types';
 
 export interface WorkflowEdgeProps {
@@ -146,6 +146,17 @@ export function WorkflowEdge({
               stroke={strokeColor}
               strokeWidth="1"
             />
+            <SvgText
+              x={(sourcePosition.x + targetPosition.x) / 2 - minX}
+              y={(sourcePosition.y + targetPosition.y) / 2 - minY}
+              fill="#374151"
+              fontSize="10"
+              fontWeight="600"
+              textAnchor="middle"
+              alignmentBaseline="middle"
+            >
+              {edge.label}
+            </SvgText>
           </G>
         )}
       </G>

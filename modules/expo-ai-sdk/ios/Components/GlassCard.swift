@@ -88,7 +88,7 @@ struct GlassCard<Content: View>: View {
         .ignoresSafeArea()
 
         ScrollView {
-            VStack(spacing: 20) {
+            LazyVStack(spacing: 20) {
                 Text("Glass Card Variants")
                     .h1()
                     .foregroundColor(.white)
@@ -165,7 +165,7 @@ struct GlassCard<Content: View>: View {
         .ignoresSafeArea()
 
         ScrollView {
-            VStack(spacing: 20) {
+            LazyVStack(spacing: 20) {
                 Text("Glass Card Variants")
                     .h1()
                     .foregroundColor(.white)
