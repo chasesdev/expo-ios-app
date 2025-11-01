@@ -1,4 +1,5 @@
 import React from 'react';
+import { HStack, VStack, Text } from '@expo/ui/swift-ui';
 import { Host } from '../common/SwiftUIHost';
 import { ScrollView, TouchableOpacity } from 'react-native';
 import { useTheme } from '../../design-system';
@@ -84,7 +85,7 @@ export function Suggestion({
             ]}
             style={{ paddingHorizontal: 10, paddingVertical: 6 }}
           >
-            <View style={{ flexDirection: 'row', gap: 4, alignItems: 'center' }}>
+            <HStack spacing={4} style={{ alignItems: 'center' }}>
               {showIcons && option.icon && (
                 <Text style={{ fontSize: 12 }}>{option.icon}</Text>
               )}
@@ -97,7 +98,7 @@ export function Suggestion({
               >
                 {option.label}
               </Text>
-            </View>
+            </HStack>
           </Host>
         </TouchableOpacity>
       );
@@ -124,14 +125,14 @@ export function Suggestion({
             ]}
             style={{ paddingHorizontal: 12, paddingVertical: 8 }}
           >
-            <View style={{ flexDirection: 'row', gap: 6, alignItems: 'center' }}>
+            <HStack spacing={6} style={{ alignItems: 'center' }}>
               {showIcons && option.icon && (
                 <Text style={{ fontSize: 14 }}>{option.icon}</Text>
               )}
               <Text style={{ fontSize: 13, fontWeight: '500' }}>
                 {option.label}
               </Text>
-            </View>
+            </HStack>
           </Host>
         </TouchableOpacity>
       );
@@ -167,8 +168,8 @@ export function Suggestion({
           ]}
           style={{ padding: theme.spacing.sm }}
         >
-          <View style={{ gap: 4 }}>
-            <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}>
+          <VStack spacing={4}>
+            <HStack spacing={8} style={{ alignItems: 'center' }}>
               {showIcons && option.icon && (
                 <Text style={{ fontSize: 18 }}>{option.icon}</Text>
               )}
@@ -181,7 +182,7 @@ export function Suggestion({
               >
                 {option.label}
               </Text>
-            </View>
+            </HStack>
             {option.description && (
               <Text
                 style={{
@@ -193,7 +194,7 @@ export function Suggestion({
                 {option.description}
               </Text>
             )}
-          </View>
+          </VStack>
         </Host>
       </TouchableOpacity>
     );
@@ -203,7 +204,7 @@ export function Suggestion({
   if (layout === 'horizontal') {
     return (
       <Host testID={testID}>
-        <View style={{ gap: 8 }}>
+        <VStack spacing={8}>
           {title && (
             <Text style={{ fontSize: 13, fontWeight: '500', paddingHorizontal: theme.spacing.xs }}>
               {title}
@@ -216,7 +217,7 @@ export function Suggestion({
           >
             {options.map((option) => renderSuggestionChip(option))}
           </ScrollView>
-        </View>
+        </VStack>
       </Host>
     );
   }
@@ -225,14 +226,14 @@ export function Suggestion({
   if (layout === 'vertical') {
     return (
       <Host testID={testID} style={{ padding: theme.spacing.xs }}>
-        <View style={{ gap: 8 }}>
+        <VStack spacing={8}>
           {title && (
             <Text style={{ fontSize: 14, fontWeight: '600' }}>
               {title}
             </Text>
           )}
           {options.map((option) => renderSuggestionChip(option))}
-        </View>
+        </VStack>
       </Host>
     );
   }
@@ -240,7 +241,7 @@ export function Suggestion({
   // Grid layout
   return (
     <Host testID={testID} style={{ padding: theme.spacing.xs }}>
-      <View style={{ gap: 12 }}>
+      <VStack spacing={12}>
         {title && (
           <Text style={{ fontSize: 14, fontWeight: '600' }}>
             {title}
@@ -249,7 +250,7 @@ export function Suggestion({
         <Host style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
           {options.map((option) => renderSuggestionChip(option))}
         </Host>
-      </View>
+      </VStack>
     </Host>
   );
 }

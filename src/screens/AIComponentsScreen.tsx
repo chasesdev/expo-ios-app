@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView, Text as RNText, TouchableOpacity, Linking } from 'react-native';
-import { VStack, Text, HStack } from '@expo/ui/swift-ui';
 import { Host } from '../components/common/SwiftUIHost';
 import { useTheme } from '../design-system';
 import {
@@ -36,32 +35,32 @@ export function AIComponentsScreen() {
     <View style={[styles.container, { backgroundColor: theme.colors.background.rgb }]}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <Host style={{ padding: 20 }}>
-          <VStack spacing={48}>
+          <View style={{ gap: 48 }}>
             {/* Header with View All Link */}
-            <HStack spacing={12} style={{ alignItems: 'flex-start', justifyContent: 'space-between' }}>
-              <VStack spacing={4} style={{ flex: 1 }}>
-                <Text style={{ fontSize: 28, fontWeight: '600' }}>
+            <View style={{ flexDirection: 'row', gap: 12, alignItems: 'flex-start', justifyContent: 'space-between' }}>
+              <View style={{ gap: 4, flex: 1 }}>
+                <RNText style={{ fontSize: 28, fontWeight: '600' }}>
                   AI SDK Components
-                </Text>
-                <Text style={{ fontSize: 14, opacity: 0.7 }}>
+                </RNText>
+                <RNText style={{ fontSize: 14, opacity: 0.7 }}>
                   Interactive demos for all 30+ AI components
-                </Text>
-              </VStack>
+                </RNText>
+              </View>
               <TouchableOpacity onPress={() => console.log('View all')}>
-                <Text style={{ fontSize: 14, fontWeight: '600', color: theme.colors.primary.rgb }}>
+                <RNText style={{ fontSize: 14, fontWeight: '600', color: theme.colors.primary.rgb }}>
                   View All Components
-                </Text>
+                </RNText>
               </TouchableOpacity>
-            </HStack>
+            </View>
 
             {/* Workflow Planner */}
-            <VStack spacing={12}>
+            <View style={{ gap: 12 }}>
               <RNText style={[styles.componentTitle, { color: theme.colors.foreground.rgb }]}>
                 Workflow Planner
               </RNText>
-              <Text style={{ fontSize: 14, opacity: 0.7, marginBottom: 8 }}>
+              <RNText style={{ fontSize: 14, opacity: 0.7, marginBottom: 8 }}>
                 Interactive workflow visualization with drag-and-drop nodes
-              </Text>
+              </RNText>
               <WorkflowPlanner
                 initialWorkflow={exampleWorkflow}
                 editable
@@ -71,17 +70,17 @@ export function AIComponentsScreen() {
                 onNodeSelect={(nodeId) => console.log('Node selected:', nodeId)}
                 onEdgeSelect={(edgeId) => console.log('Edge selected:', edgeId)}
               />
-            </VStack>
+            </View>
 
             {/* AI Chatbot */}
-            <VStack spacing={12}>
+            <View style={{ gap: 12 }}>
               <RNText style={[styles.componentTitle, { color: theme.colors.foreground.rgb }]}>
                 AI Chatbot
               </RNText>
-              <Text style={{ fontSize: 14, opacity: 0.7, marginBottom: 8 }}>
+              <RNText style={{ fontSize: 14, opacity: 0.7, marginBottom: 8 }}>
                 Full-featured conversation interface with message history
-              </Text>
-              <VStack spacing={12}>
+              </RNText>
+              <View style={{ gap: 12 }}>
                 <PromptInput
                   value={promptValue}
                   onChange={setPromptValue}
@@ -97,17 +96,17 @@ export function AIComponentsScreen() {
                   variant="default"
                   onMessageAction={(messageId, action) => console.log('Message action:', messageId, action)}
                 />
-              </VStack>
-            </VStack>
+              </View>
+            </View>
 
             {/* Terminal Component */}
-            <VStack spacing={12}>
+            <View style={{ gap: 12 }}>
               <RNText style={[styles.componentTitle, { color: theme.colors.foreground.rgb }]}>
                 Terminal (VCR)
               </RNText>
-              <Text style={{ fontSize: 14, opacity: 0.7, marginBottom: 8 }}>
+              <RNText style={{ fontSize: 14, opacity: 0.7, marginBottom: 8 }}>
                 Terminal recording playback with controls
-              </Text>
+              </RNText>
               <Terminal
                 recording={exampleRecordings.npmInstall}
                 autoPlay
@@ -115,33 +114,33 @@ export function AIComponentsScreen() {
                 showControls
                 showHeader
               />
-            </VStack>
+            </View>
 
             {/* Plan Component */}
-            <VStack spacing={12}>
+            <View style={{ gap: 12 }}>
               <RNText style={[styles.componentTitle, { color: theme.colors.foreground.rgb }]}>
                 Plan
               </RNText>
-              <Text style={{ fontSize: 14, opacity: 0.7, marginBottom: 8 }}>
+              <RNText style={{ fontSize: 14, opacity: 0.7, marginBottom: 8 }}>
                 Multi-step plan visualization with progress tracking
-              </Text>
+              </RNText>
               <Plan
                 plan={examplePlans[0]}
                 variant="default"
                 collapsible
                 onStepPress={(stepId) => console.log('Step pressed:', stepId)}
               />
-            </VStack>
+            </View>
 
             {/* Task Component */}
-            <VStack spacing={12}>
+            <View style={{ gap: 12 }}>
               <RNText style={[styles.componentTitle, { color: theme.colors.foreground.rgb }]}>
                 Task
               </RNText>
-              <Text style={{ fontSize: 14, opacity: 0.7, marginBottom: 8 }}>
+              <RNText style={{ fontSize: 14, opacity: 0.7, marginBottom: 8 }}>
                 Individual task items with status and actions
-              </Text>
-              <VStack spacing={12}>
+              </RNText>
+              <View style={{ gap: 12 }}>
                 {exampleTasks.slice(0, 3).map((task) => (
                   <Task
                     key={task.id}
@@ -151,18 +150,18 @@ export function AIComponentsScreen() {
                     onStatusChange={(status) => console.log('Status changed:', status)}
                   />
                 ))}
-              </VStack>
-            </VStack>
+              </View>
+            </View>
 
             {/* Message Component */}
-            <VStack spacing={12}>
+            <View style={{ gap: 12 }}>
               <RNText style={[styles.componentTitle, { color: theme.colors.foreground.rgb }]}>
                 Message
               </RNText>
-              <Text style={{ fontSize: 14, opacity: 0.7, marginBottom: 8 }}>
+              <RNText style={{ fontSize: 14, opacity: 0.7, marginBottom: 8 }}>
                 Individual message bubbles with actions and reactions
-              </Text>
-              <VStack spacing={12}>
+              </RNText>
+              <View style={{ gap: 12 }}>
                 {exampleMessages.slice(0, 2).map((message) => (
                   <Message
                     key={message.id}
@@ -174,49 +173,49 @@ export function AIComponentsScreen() {
                     onShare={() => console.log('Share:', message.id)}
                   />
                 ))}
-              </VStack>
-            </VStack>
+              </View>
+            </View>
 
             {/* Artifact Component */}
-            <VStack spacing={12}>
+            <View style={{ gap: 12 }}>
               <RNText style={[styles.componentTitle, { color: theme.colors.foreground.rgb }]}>
                 Artifact
               </RNText>
-              <Text style={{ fontSize: 14, opacity: 0.7, marginBottom: 8 }}>
+              <RNText style={{ fontSize: 14, opacity: 0.7, marginBottom: 8 }}>
                 Code artifacts with syntax highlighting and actions
-              </Text>
+              </RNText>
               <Artifact
                 artifact={exampleArtifacts[0]}
                 variant="default"
                 onDownload={() => console.log('Download')}
                 onShare={() => console.log('Share')}
               />
-            </VStack>
+            </View>
 
             {/* Tool Component */}
-            <VStack spacing={12}>
+            <View style={{ gap: 12 }}>
               <RNText style={[styles.componentTitle, { color: theme.colors.foreground.rgb }]}>
                 Tool
               </RNText>
-              <Text style={{ fontSize: 14, opacity: 0.7, marginBottom: 8 }}>
+              <RNText style={{ fontSize: 14, opacity: 0.7, marginBottom: 8 }}>
                 Tool execution displays with status and results
-              </Text>
-              <VStack spacing={12}>
+              </RNText>
+              <View style={{ gap: 12 }}>
                 {exampleTools.slice(0, 2).map((tool) => (
                   <Tool key={tool.id} tool={tool} variant="default" />
                 ))}
-              </VStack>
-            </VStack>
+              </View>
+            </View>
 
             {/* AI Image Component */}
-            <VStack spacing={12}>
+            <View style={{ gap: 12 }}>
               <RNText style={[styles.componentTitle, { color: theme.colors.foreground.rgb }]}>
                 AI Image
               </RNText>
-              <Text style={{ fontSize: 14, opacity: 0.7, marginBottom: 8 }}>
+              <RNText style={{ fontSize: 14, opacity: 0.7, marginBottom: 8 }}>
                 AI-generated image display with metadata
-              </Text>
-              <VStack spacing={12}>
+              </RNText>
+              <View style={{ gap: 12 }}>
                 {exampleImages.slice(0, 1).map((image) => (
                   <AIImage
                     key={image.id}
@@ -225,23 +224,23 @@ export function AIComponentsScreen() {
                     onPress={() => console.log('Image pressed:', image.id)}
                   />
                 ))}
-              </VStack>
-            </VStack>
+              </View>
+            </View>
 
             {/* Sources Component */}
-            <VStack spacing={12}>
+            <View style={{ gap: 12 }}>
               <RNText style={[styles.componentTitle, { color: theme.colors.foreground.rgb }]}>
                 Sources
               </RNText>
-              <Text style={{ fontSize: 14, opacity: 0.7, marginBottom: 8 }}>
+              <RNText style={{ fontSize: 14, opacity: 0.7, marginBottom: 8 }}>
                 Source citations and references
-              </Text>
+              </RNText>
               <Sources
                 sources={exampleSources}
                 variant="default"
                 onSourcePress={(source) => console.log('Source pressed:', source.id)}
               />
-            </VStack>
+            </View>
 
             {/* Component Count Footer */}
             <View
@@ -262,7 +261,7 @@ export function AIComponentsScreen() {
                 ✓ Conversation UI • Terminal • Workflow • Planning • Content Display
               </RNText>
             </View>
-          </VStack>
+          </View>
         </Host>
       </ScrollView>
     </View>

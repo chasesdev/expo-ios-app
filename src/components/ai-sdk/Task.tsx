@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, StyleSheet, Text as RNText, TouchableOpacity } from 'react-native';
-import { VStack, HStack } from '@expo/ui/swift-ui';
 import { Host } from '../common/SwiftUIHost';
 import { useTheme } from '../../design-system';
 
@@ -95,9 +94,9 @@ export function Task({
         ]}
         style={{ padding: variant === 'compact' ? 10 : 14 }}
       >
-        <VStack spacing={variant === 'compact' ? 6 : 10}>
+        <View style={{ gap: variant === 'compact' ? 6 : 10 }}>
           {/* Header Row */}
-          <HStack spacing={10} style={{ alignItems: 'center' }}>
+          <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
             {/* Status Icon */}
             <TouchableOpacity
               onPress={() => onStatusChange?.(task.status === 'completed' ? 'todo' : 'completed')}
@@ -123,7 +122,7 @@ export function Task({
 
               {/* Metadata Row */}
               {variant !== 'compact' && (
-                <HStack spacing={8} style={{ marginTop: 4, alignItems: 'center', flexWrap: 'wrap' }}>
+                <View style={{ flexDirection: 'row', gap: 8, marginTop: 4, alignItems: 'center', flexWrap: 'wrap' }}>
                   {/* Priority */}
                   {priorityInfo && (
                     <RNText style={[styles.metaText, { color: priorityInfo.color }]}>
@@ -159,10 +158,10 @@ export function Task({
                       👤 {task.assignee}
                     </RNText>
                   )}
-                </HStack>
+                </View>
               )}
             </View>
-          </HStack>
+          </View>
 
           {/* Description */}
           {task.description && variant === 'detailed' && (
@@ -203,10 +202,10 @@ export function Task({
 
           {/* Tags */}
           {task.tags && task.tags.length > 0 && variant === 'detailed' && (
-            <HStack spacing={6} style={{ flexWrap: 'wrap' }}>
+            <View style={{ flexDirection: 'row', gap: 6, flexWrap: 'wrap' }}>
               {task.tags.map((tag, index) => (
                 <Host
-                  key={index}
+                  key={`${task.id}-tag-${tag}`}
                   modifiers={[
                     {
                       type: 'background',
@@ -224,9 +223,9 @@ export function Task({
                   </RNText>
                 </Host>
               ))}
-            </HStack>
+            </View>
           )}
-        </VStack>
+        </View>
       </Host>
     </TouchableOpacity>
   );

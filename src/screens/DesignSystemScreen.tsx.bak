@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, StyleSheet, ScrollView as RN , Text as RNText} from 'react-native';
+import { View, StyleSheet, ScrollView, Text as RNText } from 'react-native';
+import { VStack, HStack, Text } from '@expo/ui/swift-ui';
 import { Host } from '../components/common/SwiftUIHost';
 import { useTheme, tokens, typography, glassTokens, materialVariantNames } from '../design-system';
 import { GlassCard } from '../components/ui/glass';
@@ -13,52 +14,52 @@ export function DesignSystemScreen() {
     <View style={[styles.container, { backgroundColor: theme.colors.background.rgb }]}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <Host style={{ padding: 20 }}>
-          <View style={{ gap: 32 }}>
+          <VStack spacing={32}>
             {/* Colors Section */}
-            <View style={{ gap: 16 }}>
+            <VStack spacing={16}>
               <RNText style={{ fontSize: 24, fontWeight: '600', lineHeight: 32, marginBottom: 8, color: theme.colors.foreground.rgb }}>Colors</RNText>
 
-              <View style={{ gap: 12 }}>
+              <VStack spacing={12}>
                 <ColorRow label="Primary" color={theme.colors.primary.rgb} />
                 <ColorRow label="Secondary" color={theme.colors.secondary.rgb} />
                 <ColorRow label="Accent" color={theme.colors.accent.rgb} />
                 <ColorRow label="Destructive" color={theme.colors.destructive.rgb} />
                 <ColorRow label="Muted" color={theme.colors.muted.rgb} />
                 <ColorRow label="Border" color={theme.colors.border.rgb} />
-              </View>
-            </View>
+              </VStack>
+            </VStack>
 
             {/* Radius Section */}
-            <View style={{ gap: 16 }}>
+            <VStack spacing={16}>
               <RNText style={{ fontSize: 24, fontWeight: '600', lineHeight: 32, marginBottom: 8, color: theme.colors.foreground.rgb }}>Border Radius</RNText>
 
-              <View style={{ gap: 12 }}>
+              <VStack spacing={12}>
                 <RadiusExample label="Small" value={theme.radius.sm} />
                 <RadiusExample label="Medium" value={theme.radius.md} />
                 <RadiusExample label="Large" value={theme.radius.lg} />
                 <RadiusExample label="Extra Large" value={theme.radius.xl} />
-              </View>
-            </View>
+              </VStack>
+            </VStack>
 
             {/* Spacing Section */}
-            <View style={{ gap: 16 }}>
+            <VStack spacing={16}>
               <RNText style={{ fontSize: 24, fontWeight: '600', lineHeight: 32, marginBottom: 8, color: theme.colors.foreground.rgb }}>Spacing</RNText>
 
-              <View style={{ gap: 12 }}>
+              <VStack spacing={12}>
                 <SpacingExample label="Extra Small" value={theme.spacing.xs} />
                 <SpacingExample label="Small" value={theme.spacing.sm} />
                 <SpacingExample label="Medium" value={theme.spacing.md} />
                 <SpacingExample label="Large" value={theme.spacing.lg} />
                 <SpacingExample label="Extra Large" value={theme.spacing.xl} />
                 <SpacingExample label="2X Large" value={theme.spacing['2xl']} />
-              </View>
-            </View>
+              </VStack>
+            </VStack>
 
             {/* Typography Section */}
-            <View style={{ gap: 16 }}>
+            <VStack spacing={16}>
               <RNText style={{ fontSize: 24, fontWeight: '600', lineHeight: 32, marginBottom: 8, color: theme.colors.foreground.rgb }}>Typography</RNText>
 
-              <View style={{ gap: 16 }}>
+              <VStack spacing={16}>
                 <TypographyExample variant="display" text="Display" />
                 <TypographyExample variant="h1" text="Heading 1" />
                 <TypographyExample variant="h2" text="Heading 2" />
@@ -68,11 +69,11 @@ export function DesignSystemScreen() {
                 <TypographyExample variant="bodySmall" text="Small body text" />
                 <TypographyExample variant="label" text="Label" />
                 <TypographyExample variant="caption" text="Caption" />
-              </View>
-            </View>
+              </VStack>
+            </VStack>
 
             {/* Glass Effects Section */}
-            <View style={{ gap: 16 }}>
+            <VStack spacing={16}>
               <RNText style={{ fontSize: 24, fontWeight: '600', lineHeight: 32, marginBottom: 8, color: theme.colors.foreground.rgb }}>Glass Effects ✨</RNText>
 
               {/* Device Capability */}
@@ -93,7 +94,7 @@ export function DesignSystemScreen() {
               </View>
 
               {/* Material Types */}
-              <View style={{ gap: 12 }}>
+              <VStack spacing={12}>
                 <RNText style={[styles.sectionLabel, { color: theme.colors.foreground.rgb }]}>
                   Material Variants
                 </RNText>
@@ -118,10 +119,10 @@ export function DesignSystemScreen() {
                   blur={glassTokens.blur.heavy}
                   opacity={glassTokens.opacity.heavy}
                 />
-              </View>
+              </VStack>
 
               {/* Glass Tokens */}
-              <View style={{ gap: 12 }}>
+              <VStack spacing={12}>
                 <RNText style={[styles.sectionLabel, { color: theme.colors.foreground.rgb }]}>
                   Glass Tokens
                 </RNText>
@@ -170,9 +171,9 @@ export function DesignSystemScreen() {
                     Animation: {glassTokens.performance.animationDuration}ms
                   </RNText>
                 </View>
-              </View>
-            </View>
-          </View>
+              </VStack>
+            </VStack>
+          </VStack>
         </Host>
       </ScrollView>
     </View>

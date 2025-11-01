@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Text as RNText, TouchableOpacity } from 'react-native';
-import { VStack, HStack, Text } from '@expo/ui/swift-ui';
 import { Host } from '../common/SwiftUIHost';
 import { useTheme } from '../../design-system';
 import { GlassCard } from '../ui/glass';
@@ -83,9 +82,9 @@ export function Plan({
 
   return (
     <GlassCard variant="regular" style={{ alignSelf: 'stretch' }} testID={testID}>
-      <VStack spacing={variant === 'compact' ? 8 : 12}>
+      <View style={{ gap: variant === 'compact' ? 8 : 12 }}>
         {/* Plan Header */}
-        <VStack spacing={4}>
+        <View style={{ gap: 4 }}>
           <RNText style={[styles.planTitle, { color: theme.colors.foreground.rgb }]}>
             📋 {plan.title}
           </RNText>
@@ -94,7 +93,7 @@ export function Plan({
               {plan.description}
             </RNText>
           )}
-        </VStack>
+        </View>
 
         {/* Progress Bar */}
         <View style={styles.progressContainer}>
@@ -120,7 +119,7 @@ export function Plan({
         </View>
 
         {/* Steps */}
-        <VStack spacing={variant === 'compact' ? 6 : 8}>
+        <View style={{ gap: variant === 'compact' ? 6 : 8 }}>
           {plan.steps.map((step, index) => {
             const isExpanded = expandedSteps.has(step.id);
             const hasSubsteps = step.substeps && step.substeps.length > 0;
@@ -156,9 +155,9 @@ export function Plan({
                   ]}
                   style={{ padding: 12 }}
                 >
-                  <VStack spacing={8}>
+                  <View style={{ gap: 8 }}>
                     {/* Step Header */}
-                    <HStack spacing={8} style={{ alignItems: 'center' }}>
+                    <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}>
                       <RNText style={{ fontSize: 18 }}>
                         {statusIcons[step.status]}
                       </RNText>
@@ -187,7 +186,7 @@ export function Plan({
                           {isExpanded ? '▼' : '▶'}
                         </RNText>
                       )}
-                    </HStack>
+                    </View>
 
                     {/* Step Description */}
                     {step.description && (isExpanded || variant === 'detailed' && !collapsible) && (
@@ -203,10 +202,10 @@ export function Plan({
 
                     {/* Substeps */}
                     {hasSubsteps && (isExpanded || !collapsible) && (
-                      <VStack spacing={4} style={{ marginLeft: 12 }}>
+                      <View style={{ gap: 4, marginLeft: 12 }}>
                         {step.substeps!.map((substep, subIndex) => (
                           <RNText
-                            key={subIndex}
+                            key={`${step.id}-substep-${subIndex}`}
                             style={[
                               styles.substep,
                               { color: theme.colors.mutedForeground.rgb },
@@ -215,15 +214,15 @@ export function Plan({
                             • {substep}
                           </RNText>
                         ))}
-                      </VStack>
+                      </View>
                     )}
-                  </VStack>
+                  </View>
                 </Host>
               </TouchableOpacity>
             );
           })}
-        </VStack>
-      </VStack>
+        </View>
+      </View>
     </GlassCard>
   );
 }

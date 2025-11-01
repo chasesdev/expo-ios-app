@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, StyleSheetTouchableOpacity , Text as RNText} from 'react-native';
+import { View, StyleSheet, Text as RNText, TouchableOpacity } from 'react-native';
+import { VStack, HStack } from '@expo/ui/swift-ui';
 import { Host } from '../../common/SwiftUIHost';
 import { useTheme } from '../../../design-system';
 import { NodeData, NodeType, NodeStatus } from './types';
@@ -110,7 +111,7 @@ export function WorkflowNode({
         >
           <VStack spacing={8} style={node.type === 'decision' ? { transform: [{ rotate: '-45deg' }] } : {}}>
               {/* Header */}
-              <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}>
+              <HStack spacing={8} style={{ alignItems: 'center' }}>
                 <RNText style={{ fontSize: 18 }}>{config.icon}</RNText>
                 <View style={{ flex: 1 }}>
                   <RNText style={[styles.nodeLabel, { color: theme.colors.foreground.rgb }]} numberOfLines={2}>
@@ -123,7 +124,7 @@ export function WorkflowNode({
                   )}
                 </View>
                 {status && <RNText style={{ fontSize: 16 }}>{status.icon}</RNText>}
-              </View>
+              </HStack>
 
               {/* Progress Bar */}
               {typeof node.data.progress === 'number' && node.data.progress > 0 && (
@@ -140,7 +141,7 @@ export function WorkflowNode({
               {/* Code Preview */}
               {node.type === 'code' && node.data.code && (
                 <View style={[styles.codeBlock, { backgroundColor: theme.colors.background.rgb }]}>
-                  <RNText style={[styles.code{ color: theme.colors.foreground.rgb }]} numberOfLines={3}>
+                  <RNText style={[styles.codeText, { color: theme.colors.foreground.rgb }]} numberOfLines={3}>
                     {node.data.code}
                   </RNText>
                 </View>
@@ -148,18 +149,18 @@ export function WorkflowNode({
 
               {/* Decision Conditions */}
               {node.type === 'decision' && node.data.conditions && (
-                <View style={{ gap: 4 }}>
+                <VStack spacing={4}>
                   {node.data.conditions.slice(0, 2).map((cond: any) => (
                     <RNText key={cond.id} style={[styles.condition, { color: theme.colors.mutedForeground.rgb }]} numberOfLines={1}>
                       • {cond.label}
                     </RNText>
                   ))}
-                </View>
+                </VStack>
               )}
 
               {/* Task Info */}
               {node.type === 'task' && (
-                <View style={{ flexDirection: 'row', gap: 8, flexWrap: 'wrap' }}>
+                <HStack spacing={8} style={{ flexWrap: 'wrap' }}>
                   {node.data.assignee && (
                     <RNText style={[styles.metadata, { color: theme.colors.mutedForeground.rgb }]}>
                       👤 {node.data.assignee}
@@ -170,9 +171,9 @@ export function WorkflowNode({
                       📅 {new Date(node.data.dueDate).toLocaleDateString()}
                     </RNText>
                   )}
-                </View>
+                </HStack>
               )}
-            </View>
+            </VStack>
         </Host>
       </TouchableOpacity>
     </View>

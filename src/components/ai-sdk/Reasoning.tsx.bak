@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text as RNText, StyleSheet } from 'react-native';
+import { View, StyleSheet, Text as RNText } from 'react-native';
+import { VStack, HStack } from '@expo/ui/swift-ui';
 import { Host } from '../common/SwiftUIHost';
 import { useTheme } from '../../design-system';
 import { GlassCard } from '../ui/glass';
@@ -40,12 +41,12 @@ export function Reasoning({
 
   return (
     <GlassCard variant="regular" style={{ alignSelf: 'stretch' }} testID={testID}>
-      <View style={{ gap: variant === 'compact' ? 8 : 12 }}>
+      <VStack spacing={variant === 'compact' ? 8 : 12}>
         <RNText style={[styles.title, { color: theme.colors.foreground.rgb }]}>
           🤔 Reasoning Process
         </RNText>
 
-        <View style={{ gap: variant === 'compact' ? 6 : 10 }}>
+        <VStack spacing={variant === 'compact' ? 6 : 10}>
           {reasoning.map((item, index) => {
             const config = item.type ? typeConfig[item.type] : typeConfig.analysis;
             const confidenceColor = !item.confidence ? '#6B7280' :
@@ -62,8 +63,8 @@ export function Reasoning({
                 ]}
                 style={{ padding: 12 }}
               >
-                <View style={{ gap: 8 }}>
-                  <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}>
+                <VStack spacing={8}>
+                  <HStack spacing={8} style={{ alignItems: 'center' }}>
                     <RNText style={{ fontSize: 18 }}>{config.icon}</RNText>
                     <RNText style={[styles.typeLabel, { color: config.color }]}>
                       {config.label}
@@ -73,20 +74,20 @@ export function Reasoning({
                         {Math.round(item.confidence * 100)}%
                       </RNText>
                     )}
-                  </View>
+                  </HStack>
 
                   <RNText style={[styles.thought, { color: theme.colors.foreground.rgb }]}>
                     {item.thought}
                   </RNText>
 
                   {item.evidence && item.evidence.length > 0 && (
-                    <View style={{ gap: 4 }}>
+                    <VStack spacing={4}>
                       {item.evidence.map((ev, idx) => (
                         <RNText key={idx} style={[styles.evidence, { color: theme.colors.mutedForeground.rgb }]}>
                           • {ev}
                         </RNText>
                       ))}
-                    </View>
+                    </VStack>
                   )}
 
                   {showTimestamps && item.timestamp && (
@@ -94,12 +95,12 @@ export function Reasoning({
                       {item.timestamp.toLocaleTimeString()}
                     </RNText>
                   )}
-                </View>
+                </VStack>
               </Host>
             );
           })}
-        </View>
-      </View>
+        </VStack>
+      </VStack>
     </GlassCard>
   );
 }

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { VStack, HStack, Text } from '@expo/ui/swift-ui';
 import { Host } from '../common/SwiftUIHost';
 import { useTheme } from '../../design-system';
 import {
@@ -89,7 +90,7 @@ export function Response({
   if (variant === 'minimal') {
     return (
       <Host testID={testID} style={{ padding: theme.spacing.xs }}>
-        <View style={{ flexDirection: 'row', gap: 4, alignItems: 'flex-start' }}>
+        <HStack spacing={4} style={{ alignItems: 'flex-start' }}>
           {showLoader && (
             <Text style={{ fontSize: 14 }}>💬</Text>
           )}
@@ -99,7 +100,7 @@ export function Response({
               <Text style={{ color: theme.colors.primary.rgb }}>{cursorChar}</Text>
             )}
           </Text>
-        </View>
+        </HStack>
       </Host>
     );
   }
@@ -108,7 +109,7 @@ export function Response({
   if (variant === 'inline') {
     return (
       <Host testID={testID}>
-        <View style={{ flexDirection: 'row', gap: 6, alignItems: 'center' }}>
+        <HStack spacing={6} style={{ alignItems: 'center' }}>
           {showLoader && (
             <Host
               modifiers={[
@@ -129,7 +130,7 @@ export function Response({
               <Text style={{ color: theme.colors.primary.rgb }}>{cursorChar}</Text>
             )}
           </Text>
-        </View>
+        </HStack>
       </Host>
     );
   }
@@ -162,10 +163,10 @@ export function Response({
       ]}
       style={{ padding: theme.spacing.md }}
     >
-      <View style={{ gap: 8 }}>
+      <VStack spacing={8}>
         {/* Header with loader */}
         {showLoader && (
-          <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}>
+          <HStack spacing={8} style={{ alignItems: 'center' }}>
             <Host
               modifiers={[
                 {
@@ -181,7 +182,7 @@ export function Response({
             <Text style={{ fontSize: 13, fontWeight: '500', color: theme.colors.mutedForeground.rgb }}>
               {streaming ? 'AI is typing...' : 'AI Assistant'}
             </Text>
-          </View>
+          </HStack>
         )}
 
         {/* Response content */}
@@ -196,13 +197,13 @@ export function Response({
 
         {/* Streaming indicator dots */}
         {streaming && !displayedContent && (
-          <View style={{ flexDirection: 'row', gap: 4 }}>
+          <HStack spacing={4}>
             <LoadingDot delay={0} />
             <LoadingDot delay={150} />
             <LoadingDot delay={300} />
-          </View>
+          </HStack>
         )}
-      </View>
+      </VStack>
     </Host>
   );
 }

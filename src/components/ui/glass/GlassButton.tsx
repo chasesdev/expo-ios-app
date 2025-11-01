@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Text as RNText, View } from 'react-native';
-import { HStack, Text } from '@expo/ui/swift-ui';
 import { Host } from '../../common/SwiftUIHost';
 import { useTheme } from '../../../design-system';
 import { glassTokens, opacityToHex } from '../../../design-system/glass-tokens';
@@ -134,16 +133,16 @@ export function GlassButton({
       onTouchCancel={() => setIsPressed(false)}
       onTapGesture={disabled ? undefined : onPress}
     >
-      <HStack spacing={theme.spacing.sm}>
+      <View style={{ flexDirection: 'row', gap: theme.spacing.sm, alignItems: 'center' }}>
         {icon && (
           <RNText style={{ color: getForegroundColor(), fontSize: 16 }}>
             {icon}
           </RNText>
         )}
-        <Text style={{ color: getForegroundColor(), fontWeight: '500', fontSize: 14 }}>
+        <RNText style={{ color: getForegroundColor(), fontWeight: '500', fontSize: 14 }}>
           {title}
-        </Text>
-      </HStack>
+        </RNText>
+      </View>
     </Host>
   );
 }

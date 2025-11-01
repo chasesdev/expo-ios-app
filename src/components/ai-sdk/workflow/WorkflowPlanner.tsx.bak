@@ -10,6 +10,7 @@ import {
   Text as RNText,
 } from 'react-native';
 import Svg, { Defs, Pattern, Rect, Circle, Path } from 'react-native-svg';
+import { VStack, HStack } from '@expo/ui/swift-ui';
 import { Host } from '../../common/SwiftUIHost';
 import { useTheme } from '../../../design-system';
 import { WorkflowNode } from './Node';
@@ -286,7 +287,7 @@ export function WorkflowPlanner({
       {editable && (
         <View style={styles.controls}>
           <Host>
-            <View style={{ flexDirection: 'row', gap: 8 }}>
+            <HStack spacing={8}>
               {/* Add Node Buttons */}
               <TouchableOpacity onPress={() => addNode('task')} style={styles.controlButton}>
                 <RNText style={styles.controlText}>+ Task</RNText>
@@ -312,10 +313,10 @@ export function WorkflowPlanner({
               {/* Delete */}
               {(selectedNodeId || selectedEdgeId) && (
                 <TouchableOpacity onPress={deleteSelected} style={[styles.controlButton, styles.deleteButton]}>
-                  <RNText style={[styles.control{ color: '#FFFFFF' }]}>Delete</RNText>
+                  <RNText style={[styles.controlText, { color: '#FFFFFF' }]}>Delete</RNText>
                 </TouchableOpacity>
               )}
-            </View>
+            </HStack>
           </Host>
         </View>
       )}

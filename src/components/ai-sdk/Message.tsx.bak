@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Image } from '@expo/ui/swift-ui';
+import { VStack, HStack, Text, Image } from '@expo/ui/swift-ui';
 import { Host } from '../common/SwiftUIHost';
-import { TouchableOpacity, View, Text as RNText, TextInput, StyleSheet } from 'react-native';
+import { TouchableOpacity, View, TextInput, StyleSheet } from 'react-native';
 import { useTheme } from '../../design-system';
 import {
   MaterialVariant,
@@ -181,8 +181,8 @@ export function Message({
   if (variant === 'minimal') {
     return (
       <Host testID={testID} style={{ padding: theme.spacing.sm }}>
-        <View style={{ gap: 4 }}>
-          <View style={{ flexDirection: 'row', gap: 8 }}>
+        <VStack spacing={4}>
+          <HStack spacing={8}>
             <Text style={{ fontSize: 12, fontWeight: '600' }}>
               {role === 'user' ? (author?.name || 'You') : (author?.name || 'AI')}
             </Text>
@@ -194,9 +194,9 @@ export function Message({
             {showStatus && getStatusIcon() && (
               <Text style={{ fontSize: 11 }}>{getStatusIcon()}</Text>
             )}
-          </View>
+          </HStack>
           <Text style={{ fontSize: 14 }}>{content}</Text>
-        </View>
+        </VStack>
       </Host>
     );
   }
@@ -223,7 +223,7 @@ export function Message({
         ]}
         style={{ padding: theme.spacing.sm, marginVertical: theme.spacing.xs }}
       >
-        <View style={{ flexDirection: 'row', gap: 12 }}>
+        <HStack spacing={12}>
           {showAvatar && (
             <Host
               modifiers={[
@@ -239,8 +239,8 @@ export function Message({
             </Host>
           )}
 
-          <View style={{ flex: 1, gap: 4 }}>
-            <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}>
+          <VStack spacing={4} style={{ flex: 1 }}>
+            <HStack spacing={8} style={{ alignItems: 'center' }}>
               <Text style={{ fontSize: 13, fontWeight: '600' }}>
                 {role === 'user' ? (author?.name || 'You') : (author?.name || 'AI')}
               </Text>
@@ -259,12 +259,12 @@ export function Message({
               {showStatus && getStatusIcon() && (
                 <Text style={{ fontSize: 11 }}>{getStatusIcon()}</Text>
               )}
-            </View>
+            </HStack>
 
             <Text style={{ fontSize: 14 }}>{content}</Text>
 
             {showActions && (
-              <View style={{ flexDirection: 'row', gap: 12, marginTop: 4 }}>
+              <HStack spacing={12} style={{ marginTop: 4 }}>
                 {allowReactions && (
                   <>
                     <TouchableOpacity onPress={() => onReact?.('thumbsUp')}>
@@ -283,10 +283,10 @@ export function Message({
                     <Text style={{ fontSize: 14 }}>{isBookmarked ? '🔖' : '📌'}</Text>
                   </TouchableOpacity>
                 )}
-              </View>
+              </HStack>
             )}
-          </View>
-        </View>
+          </VStack>
+        </HStack>
       </Host>
     );
   }
@@ -319,9 +319,9 @@ export function Message({
       ]}
       style={{ padding: theme.spacing.md, marginVertical: theme.spacing.sm }}
     >
-      <View style={{ gap: 12 }}>
+      <VStack spacing={12}>
         {/* Header */}
-        <View style={{ flexDirection: 'row', gap: 12, alignItems: 'flex-start' }}>
+        <HStack spacing={12} style={{ alignItems: 'flex-start' }}>
           {showAvatar && (
             <Host
               modifiers={[
@@ -337,17 +337,17 @@ export function Message({
             </Host>
           )}
 
-          <View style={{ flex: 1, gap: 4 }}>
-            <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}>
+          <VStack spacing={4} style={{ flex: 1 }}>
+            <HStack spacing={8} style={{ alignItems: 'center' }}>
               <Text style={{ fontSize: 15, fontWeight: '600' }}>
                 {role === 'user' ? (author?.name || 'You') : (author?.name || 'AI')}
               </Text>
               {getPriorityBadge()}
               {isBookmarked && <Text>🔖</Text>}
               {isFlagged && <Text>🚩</Text>}
-            </View>
+            </HStack>
 
-            <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}>
+            <HStack spacing={8} style={{ alignItems: 'center' }}>
               {showTimestamp && (
                 <Text style={{ fontSize: 12, color: theme.colors.mutedForeground.rgb }}>
                   {formatTimestamp(timestamp)}
@@ -361,11 +361,11 @@ export function Message({
               {showStatus && getStatusIcon() && (
                 <Text style={{ fontSize: 12 }}>{getStatusIcon()}</Text>
               )}
-            </View>
-          </View>
+            </HStack>
+          </VStack>
 
           {showActions && (
-            <View style={{ flexDirection: 'row', gap: 12 }}>
+            <HStack spacing={12}>
               {allowReactions && (
                 <>
                   <TouchableOpacity onPress={() => onReact?.('thumbsUp')}>
@@ -409,13 +409,13 @@ export function Message({
                   <Text style={{ fontSize: 16 }}>🔄</Text>
                 </TouchableOpacity>
               )}
-            </View>
+            </HStack>
           )}
-        </View>
+        </HStack>
 
         {/* Content */}
         {isEditing ? (
-          <View style={{ gap: 8 }}>
+          <VStack spacing={8}>
             <TextInput
               value={editContent}
               onChangeText={setEditContent}
@@ -430,7 +430,7 @@ export function Message({
                 },
               ]}
             />
-            <View style={{ flexDirection: 'row', gap: 8 }}>
+            <HStack spacing={8}>
               <TouchableOpacity onPress={handleEdit}>
                 <Host
                   modifiers={[
@@ -459,15 +459,15 @@ export function Message({
                   <Text style={{ fontSize: 13, fontWeight: '600' }}>Cancel</Text>
                 </Host>
               </TouchableOpacity>
-            </View>
-          </View>
+            </HStack>
+          </VStack>
         ) : (
-          <View style={{ gap: 8 }}>
+          <VStack spacing={8}>
             <Text style={{ fontSize: 14, lineHeight: 20 }}>{content}</Text>
 
             {/* Attachments */}
             {attachments && attachments.length > 0 && (
-              <View style={{ gap: 6 }}>
+              <VStack spacing={6}>
                 {attachments.map((attachment) => (
                   <Host
                     key={attachment.id}
@@ -480,7 +480,7 @@ export function Message({
                     ]}
                     style={{ padding: 8 }}
                   >
-                    <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}>
+                    <HStack spacing={8} style={{ alignItems: 'center' }}>
                       <Text style={{ fontSize: 16 }}>📎</Text>
                       <Text style={{ fontSize: 12, flex: 1 }} numberOfLines={1}>
                         {attachment.name}
@@ -490,15 +490,15 @@ export function Message({
                           {(attachment.size / 1024).toFixed(1)}KB
                         </Text>
                       )}
-                    </View>
+                    </HStack>
                   </Host>
                 ))}
-              </View>
+              </VStack>
             )}
 
             {/* Reactions */}
             {reactions && reactions.length > 0 && (
-              <View style={{ flexDirection: 'row', gap: 6 }}>
+              <HStack spacing={6}>
                 {reactions.map((reaction) => (
                   <TouchableOpacity
                     key={reaction.type}
@@ -514,7 +514,7 @@ export function Message({
                       ]}
                       style={{ paddingHorizontal: 8, paddingVertical: 4 }}
                     >
-                      <View style={{ flexDirection: 'row', gap: 4, alignItems: 'center' }}>
+                      <HStack spacing={4} style={{ alignItems: 'center' }}>
                         <Text style={{ fontSize: 14 }}>
                           {reaction.type === 'thumbsUp' && '👍'}
                           {reaction.type === 'thumbsDown' && '👎'}
@@ -524,15 +524,15 @@ export function Message({
                         <Text style={{ fontSize: 12, fontWeight: '500' }}>
                           {reaction.count}
                         </Text>
-                      </View>
+                      </HStack>
                     </Host>
                   </TouchableOpacity>
                 ))}
-              </View>
+              </HStack>
             )}
-          </View>
+          </VStack>
         )}
-      </View>
+      </VStack>
     </Host>
   );
 }

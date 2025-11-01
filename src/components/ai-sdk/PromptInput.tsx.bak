@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import { VStack, HStack, Text } from '@expo/ui/swift-ui';
 import { Host } from '../common/SwiftUIHost';
-import { View, Text as RNText, TextInput, TouchableOpacity, ScrollView, Platform, Alert, StyleSheet } from 'react-native';
+import { TextInput, TouchableOpacity, ScrollView, Platform, Alert } from 'react-native';
 import { useTheme } from '../../design-system';
 import {
   MaterialVariant,
@@ -145,7 +146,7 @@ export function PromptInput({
 
   return (
     <Host testID={testID}>
-      <View style={{ gap: 8 }}>
+      <VStack spacing={8}>
         {/* Suggestions */}
         {showSuggestions && suggestions.length > 0 && (
           <ScrollView
@@ -168,14 +169,14 @@ export function PromptInput({
                   ]}
                   style={{ paddingHorizontal: 12, paddingVertical: 6 }}
                 >
-                  <View style={{ flexDirection: 'row', gap: 4, alignItems: 'center' }}>
+                  <HStack spacing={4} style={{ alignItems: 'center' }}>
                     {suggestion.icon && (
                       <Text style={{ fontSize: 12 }}>{suggestion.icon}</Text>
                     )}
                     <Text style={{ fontSize: 12, fontWeight: '500' }}>
                       {suggestion.label}
                     </Text>
-                  </View>
+                  </HStack>
                 </Host>
               </TouchableOpacity>
             ))}
@@ -208,7 +209,7 @@ export function PromptInput({
           ]}
           style={{ padding: theme.spacing.sm }}
         >
-          <View style={{ gap: 8 }}>
+          <VStack spacing={8}>
             {/* Attachments Preview */}
             {attachments.length > 0 && (
               <ScrollView
@@ -228,13 +229,13 @@ export function PromptInput({
                     ]}
                     style={{ padding: 8, minWidth: 120 }}
                   >
-                    <View style={{ flexDirection: 'row', gap: 6, alignItems: 'center' }}>
+                    <HStack spacing={6} style={{ alignItems: 'center' }}>
                       <Text style={{ fontSize: 14 }}>
                         {attachment.type === 'image' && '🖼️'}
                         {attachment.type === 'file' && '📄'}
                         {attachment.type === 'voice' && '🎵'}
                       </Text>
-                      <View style={{ flex: 1, gap: 2 }}>
+                      <VStack spacing={2} style={{ flex: 1 }}>
                         <Text style={{ fontSize: 11, fontWeight: '500' }} numberOfLines={1}>
                           {attachment.name}
                         </Text>
@@ -243,18 +244,18 @@ export function PromptInput({
                             {(attachment.size / 1024).toFixed(1)}KB
                           </Text>
                         )}
-                      </View>
+                      </VStack>
                       <TouchableOpacity onPress={() => removeAttachment(attachment.id)}>
                         <Text style={{ fontSize: 14 }}>✕</Text>
                       </TouchableOpacity>
-                    </View>
+                    </HStack>
                   </Host>
                 ))}
               </ScrollView>
             )}
 
             {/* Input Row */}
-            <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}>
+            <HStack spacing={8} style={{ alignItems: 'center' }}>
               {/* Text Input */}
               <TextInput
                 value={value}
@@ -279,8 +280,8 @@ export function PromptInput({
               />
 
               {/* Action Buttons */}
-              <View style={{ gap: 6 }}>
-                <View style={{ flexDirection: 'row', gap: 8 }}>
+              <VStack spacing={6}>
+                <HStack spacing={8}>
                   {/* Attachment Button */}
                   {showAttachments && (
                     <TouchableOpacity
@@ -371,9 +372,9 @@ export function PromptInput({
                       </Host>
                     </TouchableOpacity>
                   )}
-                </View>
-              </View>
-            </View>
+                </HStack>
+              </VStack>
+            </HStack>
 
             {/* Character Count */}
             {value.length > maxLength * 0.8 && (
@@ -389,9 +390,9 @@ export function PromptInput({
                 {value.length}/{maxLength}
               </Text>
             )}
-          </View>
+          </VStack>
         </Host>
-      </View>
+      </VStack>
     </Host>
   );
 }

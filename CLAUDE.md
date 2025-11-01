@@ -1,0 +1,2 @@
+- Use React Native components exclusively for layout (View instead of VStack/HStack), and only use SwiftUI components where they're properly wrapped in Host components. The gap CSS property provides
+   the same spacing functionality as SwiftUI's spacing parameter.

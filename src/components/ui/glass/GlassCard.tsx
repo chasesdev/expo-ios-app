@@ -1,5 +1,5 @@
 import React from 'react';
-import { VStack } from '@expo/ui/swift-ui';
+import { View } from 'react-native';
 import { Host } from '../../common/SwiftUIHost';
 import { useTheme } from '../../../design-system';
 import {
@@ -89,9 +89,7 @@ export function GlassCard({
       }}
       onTapGesture={onPress}
     >
-      <VStack spacing={theme.spacing.sm}>
-        {children}
-      </VStack>
+      {children}
     </Host>
   );
 }

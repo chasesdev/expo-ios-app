@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, StyleSheetTouchableOpacity , Text as RNText} from 'react-native';
+import { View, StyleSheet, Text as RNText, TouchableOpacity } from 'react-native';
+import { VStack, HStack } from '@expo/ui/swift-ui';
 import { Host } from '../common/SwiftUIHost';
 import { useTheme } from '../../design-system';
 import { GlassCard } from '../ui/glass';
@@ -75,9 +76,9 @@ export function ChainOfThought({
 
   return (
     <GlassCard variant="regular" style={{ alignSelf: 'stretch' }} testID={testID}>
-      <View style={{ gap: variant === 'compact' ? 10 : 14 }}>
+      <VStack spacing={variant === 'compact' ? 10 : 14}>
         {/* Header */}
-        <View style={{ gap: 4 }}>
+        <VStack spacing={4}>
           <RNText style={[styles.title, { color: theme.colors.foreground.rgb }]}>
             🧠 {data.title}
           </RNText>
@@ -86,10 +87,10 @@ export function ChainOfThought({
               {data.description}
             </RNText>
           )}
-        </View>
+        </VStack>
 
         {/* Thought Steps */}
-        <View style={{ gap: variant === 'compact' ? 6 : 10 }}>
+        <VStack spacing={variant === 'compact' ? 6 : 10}>
           {data.steps.map((step, index) => {
             const isExpanded = expandedSteps.has(step.id);
             const hasReasoning = step.reasoning && step.reasoning.length > 0;
@@ -125,9 +126,9 @@ export function ChainOfThought({
                   ]}
                   style={{ padding: 12 }}
                 >
-                  <View style={{ gap: 8 }}>
+                  <VStack spacing={8}>
                     {/* Step Header */}
-                    <View style={{ flexDirection: 'row', gap: 8, alignItems: 'flex-start' }}>
+                    <HStack spacing={8} style={{ alignItems: 'flex-start' }}>
                       {/* Step Number */}
                       <Host
                         modifiers={[
@@ -163,7 +164,7 @@ export function ChainOfThought({
 
                         {/* Confidence */}
                         {typeof step.confidence === 'number' && variant !== 'compact' && (
-                          <View style={{ flexDirection: 'row', gap: 8, marginTop: 6, alignItems: 'center' }}>
+                          <HStack spacing={8} style={{ marginTop: 6, alignItems: 'center' }}>
                             <RNText
                               style={[
                                 styles.confidenceText,
@@ -188,7 +189,7 @@ export function ChainOfThought({
                                 ]}
                               />
                             </View>
-                          </View>
+                          </HStack>
                         )}
                       </View>
 
@@ -198,7 +199,7 @@ export function ChainOfThought({
                           {isExpanded ? '▼' : '▶'}
                         </RNText>
                       )}
-                    </View>
+                    </HStack>
 
                     {/* Reasoning Details */}
                     {hasReasoning && (isExpanded || !collapsible) && (
@@ -211,7 +212,7 @@ export function ChainOfThought({
                         <RNText style={[styles.reasoningTitle, { color: theme.colors.foreground.rgb }]}>
                           Reasoning:
                         </RNText>
-                        <View style={{ gap: 4 }}>
+                        <VStack spacing={4}>
                           {step.reasoning!.map((reason, idx) => (
                             <RNText
                               key={idx}
@@ -220,15 +221,15 @@ export function ChainOfThought({
                               • {reason}
                             </RNText>
                           ))}
-                        </View>
+                        </VStack>
                       </View>
                     )}
-                  </View>
+                  </VStack>
                 </Host>
               </TouchableOpacity>
             );
           })}
-        </View>
+        </VStack>
 
         {/* Final Conclusion */}
         {data.finalConclusion && variant !== 'compact' && (
@@ -251,17 +252,17 @@ export function ChainOfThought({
             ]}
             style={{ padding: 12 }}
           >
-            <View style={{ gap: 4 }}>
+            <VStack spacing={4}>
               <RNText style={[styles.conclusionTitle, { color: theme.colors.primary.rgb }]}>
                 💡 Conclusion
               </RNText>
-              <RNText style={[styles.conclusion{ color: theme.colors.foreground.rgb }]}>
+              <RNText style={[styles.conclusionText, { color: theme.colors.foreground.rgb }]}>
                 {data.finalConclusion}
               </RNText>
-            </View>
+            </VStack>
           </Host>
         )}
-      </View>
+      </VStack>
     </GlassCard>
   );
 }

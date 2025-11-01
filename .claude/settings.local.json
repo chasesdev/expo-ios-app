@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(for file in /Users/cd/github/expo-ios-app/src/components/ai-sdk/{ChainOfThought,Suggestion,Response,Conversation,WorkflowPlanner}.tsx /Users/cd/github/expo-ios-app/src/components/ai-sdk/workflow/Node.tsx /Users/cd/github/expo-ios-app/src/screens/{BaseComponentsScreen,DesignSystemScreen,HomeScreen}.tsx)",
+      "Bash(do echo '=== $(basename $file) ===' grep -n \"from ''''@expo/ui/swift-ui''''\" $file)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

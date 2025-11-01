@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, StyleSheet, ScrollView, Pressable as RNDimensions , Text as RNText} from 'react-native';
-import { Button } from '@expo/ui/swift-ui';
+import { View, StyleSheet, ScrollView, Pressable, Text as RNText, Dimensions } from 'react-native';
+import { VStack, Text, Button } from '@expo/ui/swift-ui';
 import { Host } from '../components/common/SwiftUIHost';
 import { useTheme } from '../design-system';
 import { WorkflowPlanner, exampleWorkflow } from '../components/ai-sdk/workflow';
@@ -20,19 +20,19 @@ export function HomeScreen({ navigation }: HomeScreenProps) {
     <View style={[styles.container, { backgroundColor: theme.colors.background.rgb }]}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <Host style={{ padding: 20 }}>
-          <View style={{ gap: 24 }}>
+          <VStack spacing={24}>
             {/* Header */}
-            <View style={{ gap: 8 }}>
+            <VStack spacing={8}>
               <Text style={{ fontSize: 36, fontWeight: 'bold' }}>
                 AI SDK UI
               </Text>
               <Text style={{ fontSize: 16, opacity: 0.7 }}>
                 Swift UI Components for AI Applications
               </Text>
-            </View>
+            </VStack>
 
             {/* Workflow Planner Demo */}
-            <View style={{ gap: 12 }}>
+            <VStack spacing={12}>
               <Text style={{ fontSize: 24, fontWeight: '600' }}>
                 Interactive Workflow Planner
               </Text>
@@ -46,17 +46,17 @@ export function HomeScreen({ navigation }: HomeScreenProps) {
                 containerHeight={600}
                 onWorkflowChange={(workflow) => console.log('Workflow changed:', workflow)}
               />
-            </View>
+            </VStack>
 
             {/* Quick Stats */}
-            <View style={{ gap: 12 }}>
+            <VStack spacing={12}>
               <StatCard title="Base UI Components" value="49" />
               <StatCard title="AI SDK Components" value="30" />
               <StatCard title="Total Components" value="79" />
-            </View>
+            </VStack>
 
             {/* Navigation Cards */}
-            <View style={{ gap: 16 }}>
+            <VStack spacing={16}>
               <NavigationCard
                 title="Design System"
                 description="Colors, typography, spacing, and design tokens"
@@ -72,8 +72,8 @@ export function HomeScreen({ navigation }: HomeScreenProps) {
                 description="Message, Conversation, Canvas, Plan, and AI-specific components"
                 onPress={() => navigation.navigate('AIComponents')}
               />
-            </View>
-          </View>
+            </VStack>
+          </VStack>
         </Host>
       </ScrollView>
     </View>

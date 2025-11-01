@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView as RN , Text as RNText} from 'react-native';
-import { Button, Switch, SliderField, SecureField, Picker, DateTimePicker, ColorPicker, List, Section, Form, DisclosureGroup, LabeledContent, Progress, Divider, ContentUnavailableView, ShareLink, BottomSheet } from '@expo/ui/swift-ui';
+import { View, StyleSheet, ScrollView, Text as RNText } from 'react-native';
+import { VStack, HStack, Button, Text, Switch, Slider, TextField, SecureField, Picker, DateTimePicker, ColorPicker, List, Section, Form, DisclosureGroup, LabeledContent, Progress, Divider, ContentUnavailableView, ShareLink, BottomSheet } from '@expo/ui/swift-ui';
 import { Host } from '../components/common/SwiftUIHost';
 import { useTheme } from '../design-system';
 import { GlassCard, GlassButton } from '../components/ui/glass';
@@ -37,19 +37,19 @@ export function BaseComponentsScreen() {
     <View style={[styles.container, { backgroundColor: theme.colors.background.rgb }]}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <Host style={{ padding: 20 }}>
-          <View style={{ gap: 32 }}>
+          <VStack spacing={32}>
             {/* Header */}
-            <View style={{ gap: 8 }}>
+            <VStack spacing={8}>
               <Text style={{ fontSize: 28, fontWeight: '600' }}>
                 Base UI Components
               </Text>
               <Text style={{ fontSize: 14, opacity: 0.7 }}>
                 Foundational components using @expo/ui/swift-ui
               </Text>
-            </View>
+            </VStack>
 
             {/* Glass Effects Section - NEW! */}
-            <View style={{ gap: 16 }}>
+            <VStack spacing={16}>
               <RNText style={{ fontSize: 20, fontWeight: '600', lineHeight: 26, marginBottom: 8, color: theme.colors.foreground.rgb }}>Glass Effects ✨</RNText>
               <Text style={{ fontSize: 14, opacity: 0.7, marginBottom: 4 }}>
                 iOS 26 glass morphism with 6 material variants: ultraThin, thin, regular, thick, ultraThick, and bar
@@ -61,7 +61,7 @@ export function BaseComponentsScreen() {
                   backgroundColor: theme.colors.muted.rgb,
                   borderColor: theme.colors.border.rgb
                 }]}>
-                  <RNText style={[styles.notice{ color: theme.colors.foreground.rgb }]}>
+                  <RNText style={[styles.noticeText, { color: theme.colors.foreground.rgb }]}>
                     ℹ️ "Reduce Transparency" is enabled. Glass effects use solid colors.
                   </RNText>
                 </View>
@@ -76,7 +76,7 @@ export function BaseComponentsScreen() {
               />
 
               {/* Glass Cards Comparison */}
-              <View style={{ gap: 12 }}>
+              <VStack spacing={12}>
                 <RNText style={[styles.sectionLabel, { color: theme.colors.foreground.rgb }]}>
                   Glass Cards
                 </RNText>
@@ -147,10 +147,10 @@ export function BaseComponentsScreen() {
                     </RNText>
                   </Card>
                 )}
-              </View>
+              </VStack>
 
               {/* Glass Buttons */}
-              <View style={{ gap: 12 }}>
+              <VStack spacing={12}>
                 <RNText style={[styles.sectionLabel, { color: theme.colors.foreground.rgb }]}>
                   Glass Buttons
                 </RNText>
@@ -181,42 +181,42 @@ export function BaseComponentsScreen() {
                     Solid Button (Fallback)
                   </Button>
                 )}
-              </View>
-            </View>
+              </VStack>
+            </VStack>
 
             {/* Standard Buttons */}
-            <View style={{ gap: 16 }}>
+            <VStack spacing={16}>
               <RNText style={{ fontSize: 20, fontWeight: '600', lineHeight: 26, marginBottom: 8, color: theme.colors.foreground.rgb }}>Standard Buttons</RNText>
               <Text style={{ fontSize: 14, opacity: 0.7, marginBottom: 4 }}>
                 Native SwiftUI button variants
               </Text>
-              <View style={{ gap: 12 }}>
-                <View style={{ flexDirection: 'row', gap: 12 }}>
+              <VStack spacing={12}>
+                <HStack spacing={12}>
                   <Button variant="default" onPress={() => console.log('Default pressed')} style={{ flex: 1 }}>
                     Default
                   </Button>
                   <Button variant="bordered" onPress={() => console.log('Bordered pressed')} style={{ flex: 1 }}>
                     Bordered
                   </Button>
-                </View>
-                <View style={{ flexDirection: 'row', gap: 12 }}>
+                </HStack>
+                <HStack spacing={12}>
                   <Button variant="borderless" onPress={() => console.log('Borderless pressed')} style={{ flex: 1 }}>
                     Borderless
                   </Button>
                   <Button variant="plain" onPress={() => console.log('Plain pressed')} style={{ flex: 1 }}>
                     Plain
                   </Button>
-                </View>
-              </View>
-            </View>
+                </HStack>
+              </VStack>
+            </VStack>
 
             {/* Switches & Toggles */}
-            <View style={{ gap: 16 }}>
+            <VStack spacing={16}>
               <RNText style={{ fontSize: 20, fontWeight: '600', lineHeight: 26, marginBottom: 8, color: theme.colors.foreground.rgb }}>Switches & Toggles</RNText>
               <Text style={{ fontSize: 14, opacity: 0.7, marginBottom: 4 }}>
                 Interactive toggle controls with multiple variants
               </Text>
-              <View style={{ gap: 12 }}>
+              <VStack spacing={12}>
                 <Switch
                   value={switchValue}
                   onValueChange={setSwitchValue}
@@ -229,11 +229,11 @@ export function BaseComponentsScreen() {
                   label="Checkbox"
                   variant="checkbox"
                 />
-              </View>
-            </View>
+              </VStack>
+            </VStack>
 
             {/* Slider */}
-            <View style={{ gap: 16 }}>
+            <VStack spacing={16}>
               <RNText style={{ fontSize: 20, fontWeight: '600', lineHeight: 26, marginBottom: 8, color: theme.colors.foreground.rgb }}>Slider</RNText>
               <Text style={{ fontSize: 14, opacity: 0.7, marginBottom: 4 }}>
                 Continuous value selection
@@ -245,16 +245,16 @@ export function BaseComponentsScreen() {
               <Text style={{ fontSize: 14, opacity: 0.7 }}>
                 Value: {sliderValue.toFixed(2)}
               </Text>
-            </View>
+            </VStack>
 
             {/* Text Inputs */}
-            <View style={{ gap: 16 }}>
+            <VStack spacing={16}>
               <RNText style={{ fontSize: 20, fontWeight: '600', lineHeight: 26, marginBottom: 8, color: theme.colors.foreground.rgb }}>Text Inputs</RNText>
               <Text style={{ fontSize: 14, opacity: 0.7, marginBottom: 4 }}>
                 Native text fields with various keyboard types and secure input
               </Text>
-              <View style={{ gap: 12 }}>
-                <View style={{ gap: 4 }}>
+              <VStack spacing={12}>
+                <VStack spacing={4}>
                   <Text style={{ fontSize: 14, fontWeight: '500', opacity: 0.8 }}>
                     Basic Text Field
                   </Text>
@@ -263,9 +263,9 @@ export function BaseComponentsScreen() {
                     onValueChange={setTextFieldValue}
                     placeholder="Enter text here..."
                   />
-                </View>
+                </VStack>
 
-                <View style={{ gap: 4 }}>
+                <VStack spacing={4}>
                   <Text style={{ fontSize: 14, fontWeight: '500', opacity: 0.8 }}>
                     Email Field
                   </Text>
@@ -277,9 +277,9 @@ export function BaseComponentsScreen() {
                     keyboardType="emailAddress"
                     autocapitalizationType="none"
                   />
-                </View>
+                </VStack>
 
-                <View style={{ gap: 4 }}>
+                <VStack spacing={4}>
                   <Text style={{ fontSize: 14, fontWeight: '500', opacity: 0.8 }}>
                     Secure Field (Password)
                   </Text>
@@ -288,18 +288,18 @@ export function BaseComponentsScreen() {
                     onValueChange={setPasswordValue}
                     placeholder="Enter password..."
                   />
-                </View>
-              </View>
-            </View>
+                </VStack>
+              </VStack>
+            </VStack>
 
             {/* Selection Components */}
-            <View style={{ gap: 16 }}>
+            <VStack spacing={16}>
               <RNText style={{ fontSize: 20, fontWeight: '600', lineHeight: 26, marginBottom: 8, color: theme.colors.foreground.rgb }}>Selection Components</RNText>
               <Text style={{ fontSize: 14, opacity: 0.7, marginBottom: 4 }}>
                 Pickers for values, dates, and colors
               </Text>
-              <View style={{ gap: 12 }}>
-                <View style={{ gap: 4 }}>
+              <VStack spacing={12}>
+                <VStack spacing={4}>
                   <Text style={{ fontSize: 14, fontWeight: '500', opacity: 0.8 }}>
                     Picker (Menu Style)
                   </Text>
@@ -313,9 +313,9 @@ export function BaseComponentsScreen() {
                   <Text style={{ fontSize: 12, opacity: 0.6 }}>
                     Selected index: {selectedFruit}
                   </Text>
-                </View>
+                </VStack>
 
-                <View style={{ gap: 4 }}>
+                <VStack spacing={4}>
                   <Text style={{ fontSize: 14, fontWeight: '500', opacity: 0.8 }}>
                     Date Picker
                   </Text>
@@ -327,9 +327,9 @@ export function BaseComponentsScreen() {
                   <Text style={{ fontSize: 12, opacity: 0.6 }}>
                     Selected: {selectedDate.toLocaleString()}
                   </Text>
-                </View>
+                </VStack>
 
-                <View style={{ gap: 4 }}>
+                <VStack spacing={4}>
                   <Text style={{ fontSize: 14, fontWeight: '500', opacity: 0.8 }}>
                     Color Picker
                   </Text>
@@ -338,24 +338,24 @@ export function BaseComponentsScreen() {
                     onValueChanged={setSelectedColor}
                     supportsOpacity
                   />
-                  <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}>
+                  <HStack spacing={8} style={{ alignItems: 'center' }}>
                     <View style={{ width: 40, height: 40, backgroundColor: selectedColor, borderRadius: 8, borderWidth: 1, borderColor: theme.colors.border.rgb }} />
                     <Text style={{ fontSize: 12, opacity: 0.6 }}>
                       {selectedColor}
                     </Text>
-                  </View>
-                </View>
-              </View>
-            </View>
+                  </HStack>
+                </VStack>
+              </VStack>
+            </VStack>
 
             {/* Lists & Forms */}
-            <View style={{ gap: 16 }}>
+            <VStack spacing={16}>
               <RNText style={{ fontSize: 20, fontWeight: '600', lineHeight: 26, marginBottom: 8, color: theme.colors.foreground.rgb }}>Lists & Forms</RNText>
               <Text style={{ fontSize: 14, opacity: 0.7, marginBottom: 4 }}>
                 Structured data display with sections and form layouts
               </Text>
-              <View style={{ gap: 12 }}>
-                <View style={{ gap: 4 }}>
+              <VStack spacing={12}>
+                <VStack spacing={4}>
                   <Text style={{ fontSize: 14, fontWeight: '500', opacity: 0.8 }}>
                     List with Sections
                   </Text>
@@ -382,9 +382,9 @@ export function BaseComponentsScreen() {
                       </Section>
                     </List>
                   </Card>
-                </View>
+                </VStack>
 
-                <View style={{ gap: 4 }}>
+                <VStack spacing={4}>
                   <Text style={{ fontSize: 14, fontWeight: '500', opacity: 0.8 }}>
                     Form Example
                   </Text>
@@ -409,9 +409,9 @@ export function BaseComponentsScreen() {
                       </Section>
                     </Form>
                   </Card>
-                </View>
+                </VStack>
 
-                <View style={{ gap: 4 }}>
+                <VStack spacing={4}>
                   <Text style={{ fontSize: 14, fontWeight: '500', opacity: 0.8 }}>
                     Disclosure Group (Collapsible)
                   </Text>
@@ -421,7 +421,7 @@ export function BaseComponentsScreen() {
                       onToggle={() => setDisclosureExpanded(!disclosureExpanded)}
                       label="Advanced Settings"
                     >
-                      <View style={{ padding: 12, gap: 8 }}>
+                      <VStack spacing={8} style={{ padding: 12 }}>
                         <Text style={{ fontSize: 14 }}>
                           Hidden content that appears when expanded
                         </Text>
@@ -431,26 +431,26 @@ export function BaseComponentsScreen() {
                           label="Enable feature"
                           variant="switch"
                         />
-                      </View>
+                      </VStack>
                     </DisclosureGroup>
                   </Card>
-                </View>
-              </View>
-            </View>
+                </VStack>
+              </VStack>
+            </VStack>
 
             {/* Advanced Components */}
-            <View style={{ gap: 16 }}>
+            <VStack spacing={16}>
               <RNText style={{ fontSize: 20, fontWeight: '600', lineHeight: 26, marginBottom: 8, color: theme.colors.foreground.rgb }}>Advanced Components</RNText>
               <Text style={{ fontSize: 14, opacity: 0.7, marginBottom: 4 }}>
                 Progress indicators, sheets, sharing, and empty states
               </Text>
-              <View style={{ gap: 12 }}>
-                <View style={{ gap: 4 }}>
+              <VStack spacing={12}>
+                <VStack spacing={4}>
                   <Text style={{ fontSize: 14, fontWeight: '500', opacity: 0.8 }}>
                     Progress Indicator
                   </Text>
                   <Progress value={progressValue} />
-                  <View style={{ flexDirection: 'row', gap: 8 }}>
+                  <HStack spacing={8}>
                     <Button
                       variant="bordered"
                       onPress={() => setProgressValue(Math.max(0, progressValue - 0.1))}
@@ -466,25 +466,25 @@ export function BaseComponentsScreen() {
                     >
                       +
                     </Button>
-                  </View>
-                </View>
+                  </HStack>
+                </VStack>
 
-                <View style={{ gap: 4 }}>
+                <VStack spacing={4}>
                   <Text style={{ fontSize: 14, fontWeight: '500', opacity: 0.8 }}>
                     Divider
                   </Text>
                   <Card>
-                    <View style={{ gap: 0 }}>
+                    <VStack spacing={0}>
                       <Text style={{ padding: 12 }}>First Item</Text>
                       <Divider />
                       <Text style={{ padding: 12 }}>Second Item</Text>
                       <Divider />
                       <Text style={{ padding: 12 }}>Third Item</Text>
-                    </View>
+                    </VStack>
                   </Card>
-                </View>
+                </VStack>
 
-                <View style={{ gap: 4 }}>
+                <VStack spacing={4}>
                   <Text style={{ fontSize: 14, fontWeight: '500', opacity: 0.8 }}>
                     Bottom Sheet
                   </Text>
@@ -498,7 +498,7 @@ export function BaseComponentsScreen() {
                     isOpened={showBottomSheet}
                     onIsOpenedChange={setShowBottomSheet}
                   >
-                    <View style={{ padding: 20, gap: 16 }}>
+                    <VStack spacing={16} style={{ padding: 20 }}>
                       <Text style={{ fontSize: 24, fontWeight: '600' }}>
                         Bottom Sheet
                       </Text>
@@ -511,11 +511,11 @@ export function BaseComponentsScreen() {
                       >
                         Close
                       </Button>
-                    </View>
+                    </VStack>
                   </BottomSheet>
-                </View>
+                </VStack>
 
-                <View style={{ gap: 4 }}>
+                <VStack spacing={4}>
                   <Text style={{ fontSize: 14, fontWeight: '500', opacity: 0.8 }}>
                     Share Link
                   </Text>
@@ -527,9 +527,9 @@ export function BaseComponentsScreen() {
                       Share Expo Website
                     </Button>
                   </ShareLink>
-                </View>
+                </VStack>
 
-                <View style={{ gap: 4 }}>
+                <VStack spacing={4}>
                   <Text style={{ fontSize: 14, fontWeight: '500', opacity: 0.8 }}>
                     Content Unavailable View (Empty State)
                   </Text>
@@ -540,14 +540,14 @@ export function BaseComponentsScreen() {
                       systemImage="tray"
                     />
                   </Card>
-                </View>
-              </View>
-            </View>
+                </VStack>
+              </VStack>
+            </VStack>
 
             {/* Additional Info */}
-            <View style={{ gap: 12 }}>
+            <VStack spacing={12}>
               <Card>
-                <View style={{ gap: 8 }}>
+                <VStack spacing={8}>
                   <RNText style={{ fontSize: 16, fontWeight: '600', color: theme.colors.foreground.rgb }}>
                     📦 Component Library
                   </RNText>
@@ -558,10 +558,10 @@ export function BaseComponentsScreen() {
                   <RNText style={{ fontSize: 14, lineHeight: 20, color: theme.colors.mutedForeground.rgb }}>
                     💡 All components are native iOS SwiftUI views bridged to React Native, providing true native performance and appearance.
                   </RNText>
-                </View>
+                </VStack>
               </Card>
-            </View>
-          </View>
+            </VStack>
+          </VStack>
         </Host>
       </ScrollView>
     </View>
