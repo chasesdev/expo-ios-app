@@ -2,6 +2,7 @@ import React from 'react';
 import { View, StyleSheet, ScrollView, Pressable, Text as RNText } from 'react-native';
 import { Host, VStack, Text, Button } from '@expo/ui/swift-ui';
 import { useTheme } from '../design-system';
+import { WorkflowPlanner, exampleWorkflow } from '../components/ai-sdk/workflow';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../navigation/types';
 
@@ -25,6 +26,23 @@ export function HomeScreen({ navigation }: HomeScreenProps) {
               <Text style={{ fontSize: 16, opacity: 0.7 }}>
                 Swift UI Components for AI Applications
               </Text>
+            </VStack>
+
+            {/* Workflow Planner Demo */}
+            <VStack spacing={12}>
+              <Text style={{ fontSize: 24, fontWeight: '600' }}>
+                Interactive Workflow Planner
+              </Text>
+              <Text style={{ fontSize: 14, opacity: 0.7 }}>
+                Drag nodes, zoom, pan, and create connections. Try the example workflow below!
+              </Text>
+              <WorkflowPlanner
+                initialWorkflow={exampleWorkflow}
+                editable={true}
+                containerWidth={350}
+                containerHeight={500}
+                onWorkflowChange={(workflow) => console.log('Workflow changed:', workflow)}
+              />
             </VStack>
 
             {/* Quick Stats */}

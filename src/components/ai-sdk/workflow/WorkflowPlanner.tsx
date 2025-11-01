@@ -241,36 +241,38 @@ export function WorkflowPlanner({
       {/* Controls */}
       {editable && (
         <View style={styles.controls}>
-          <HStack spacing={8}>
-            {/* Add Node Buttons */}
-            <TouchableOpacity onPress={() => addNode('task')} style={styles.controlButton}>
-              <RNText style={styles.controlText}>+ Task</RNText>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => addNode('code')} style={styles.controlButton}>
-              <RNText style={styles.controlText}>+ Code</RNText>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => addNode('decision')} style={styles.controlButton}>
-              <RNText style={styles.controlText}>+ Decision</RNText>
-            </TouchableOpacity>
-
-            {/* Zoom Controls */}
-            <TouchableOpacity onPress={zoomOut} style={styles.controlButton}>
-              <RNText style={styles.controlText}>−</RNText>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={zoomIn} style={styles.controlButton}>
-              <RNText style={styles.controlText}>+</RNText>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={fitView} style={styles.controlButton}>
-              <RNText style={styles.controlText}>Fit</RNText>
-            </TouchableOpacity>
-
-            {/* Delete */}
-            {(selectedNodeId || selectedEdgeId) && (
-              <TouchableOpacity onPress={deleteSelected} style={[styles.controlButton, styles.deleteButton]}>
-                <RNText style={[styles.controlText, { color: '#FFFFFF' }]}>Delete</RNText>
+          <Host>
+            <HStack spacing={8}>
+              {/* Add Node Buttons */}
+              <TouchableOpacity onPress={() => addNode('task')} style={styles.controlButton}>
+                <RNText style={styles.controlText}>+ Task</RNText>
               </TouchableOpacity>
-            )}
-          </HStack>
+              <TouchableOpacity onPress={() => addNode('code')} style={styles.controlButton}>
+                <RNText style={styles.controlText}>+ Code</RNText>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => addNode('decision')} style={styles.controlButton}>
+                <RNText style={styles.controlText}>+ Decision</RNText>
+              </TouchableOpacity>
+
+              {/* Zoom Controls */}
+              <TouchableOpacity onPress={zoomOut} style={styles.controlButton}>
+                <RNText style={styles.controlText}>−</RNText>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={zoomIn} style={styles.controlButton}>
+                <RNText style={styles.controlText}>+</RNText>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={fitView} style={styles.controlButton}>
+                <RNText style={styles.controlText}>Fit</RNText>
+              </TouchableOpacity>
+
+              {/* Delete */}
+              {(selectedNodeId || selectedEdgeId) && (
+                <TouchableOpacity onPress={deleteSelected} style={[styles.controlButton, styles.deleteButton]}>
+                  <RNText style={[styles.controlText, { color: '#FFFFFF' }]}>Delete</RNText>
+                </TouchableOpacity>
+              )}
+            </HStack>
+          </Host>
         </View>
       )}
 
