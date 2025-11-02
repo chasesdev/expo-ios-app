@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useMemo } from 'react';
 import { Host } from '../common/SwiftUIHost';
 import { FlatList, RefreshControl, KeyboardAvoidingView, Platform, View } from 'react-native';
-import { Text } from '@expo/ui/swift-ui';
+import { Text as SwiftUIText } from '@expo/ui/swift-ui';
 import { useTheme } from '../../design-system';
 import { Message, MessageProps } from './Message';
 
@@ -115,9 +115,9 @@ export const Conversation = React.memo(function Conversation({
             marginVertical: 8,
           }}
         >
-          <Text style={{ fontSize: 11, fontWeight: '600', color: theme.colors.mutedForeground.rgb }}>
+          <SwiftUIText style={{ fontSize: 11, fontWeight: '600', color: theme.colors.mutedForeground.rgb }}>
             {item.data}
-          </Text>
+          </SwiftUIText>
         </Host>
       );
     }
@@ -146,7 +146,7 @@ export const Conversation = React.memo(function Conversation({
   // Empty state
   if (messages.length === 0 && !isLoading) {
     return (
-      <Host
+      <View
         testID={testID}
         style={{
           flex: 1,
@@ -156,19 +156,23 @@ export const Conversation = React.memo(function Conversation({
         }}
       >
         <View style={{ alignItems: 'center', gap: 16 }}>
-          <Text style={{ fontSize: 48 }}>{emptyStateIcon}</Text>
-          <Text
-            style={{
-              fontSize: 16,
-              fontWeight: '500',
-              color: theme.colors.mutedForeground.rgb,
-              textAlign: 'center',
-            }}
-          >
-            {emptyStateText}
-          </Text>
+          <Host>
+            <SwiftUIText style={{ fontSize: 48 }}>{emptyStateIcon}</SwiftUIText>
+          </Host>
+          <Host>
+            <SwiftUIText
+              style={{
+                fontSize: 16,
+                fontWeight: '500',
+                color: theme.colors.mutedForeground.rgb,
+                textAlign: 'center',
+              }}
+            >
+              {emptyStateText}
+            </SwiftUIText>
+          </Host>
         </View>
-      </Host>
+      </View>
     );
   }
 
@@ -217,9 +221,9 @@ export const Conversation = React.memo(function Conversation({
               {/* Loading State */}
               {isLoading && (
                 <Host style={{ alignItems: 'center', padding: theme.spacing.md }}>
-                  <Text style={{ fontSize: 13, color: theme.colors.mutedForeground.rgb }}>
+                  <SwiftUIText style={{ fontSize: 13, color: theme.colors.mutedForeground.rgb }}>
                     Loading messages...
-                  </Text>
+                  </SwiftUIText>
                 </Host>
               )}
             </>

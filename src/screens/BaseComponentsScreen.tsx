@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, ScrollView as RN , Text as RNText} from 'react-native';
-import { Button, Switch, Slider, SecureField, Picker, DateTimePicker, ColorPicker, List, Section, Form, LabeledContent, Divider, ContentUnavailableView, ShareLink, BottomSheet, Text, TextField } from '@expo/ui/swift-ui';
+import { Button, Switch, Slider, SecureField, Picker, DateTimePicker, ColorPicker, List, Section, Form, LabeledContent, Divider, ContentUnavailableView, ShareLink, BottomSheet, Text, TextField, LabelPrimitive } from '@expo/ui/swift-ui';
 import { Host } from '../components/common/SwiftUIHost';
 import { useTheme } from '../design-system';
 import { GlassCard, GlassButton } from '../components/ui/glass';
@@ -67,12 +67,14 @@ export function BaseComponentsScreen() {
               )}
 
               {/* Glass Toggle */}
-              <Switch
-                value={glassEnabled}
-                onValueChange={setGlassEnabled}
-                label="Enable Glass Effects"
-                variant="switch"
-              />
+              <Host>
+                <Switch
+                  value={glassEnabled}
+                  onValueChange={setGlassEnabled}
+                  label="Enable Glass Effects"
+                  variant="switch"
+                />
+              </Host>
 
               {/* Glass Cards Comparison */}
               <View style={{ gap: 12 }}>
@@ -176,9 +178,11 @@ export function BaseComponentsScreen() {
                     />
                   </>
                 ) : (
-                  <Button variant="default" onPress={() => console.log('Pressed')}>
-                    Solid Button (Fallback)
-                  </Button>
+                  <Host>
+                    <Button variant="default" onPress={() => console.log('Pressed')}>
+                      Solid Button (Fallback)
+                    </Button>
+                  </Host>
                 )}
               </View>
             </View>
@@ -192,26 +196,34 @@ export function BaseComponentsScreen() {
               <View style={{ gap: 12 }}>
                 <View style={{ flexDirection: 'row', gap: 12 }}>
                   <View style={{ flex: 1 }}>
-                    <Button variant="default" onPress={() => console.log('Default pressed')}>
-                      Default
-                    </Button>
+                    <Host>
+                      <Button variant="default" onPress={() => console.log('Default pressed')}>
+                        Default
+                      </Button>
+                    </Host>
                   </View>
                   <View style={{ flex: 1 }}>
-                    <Button variant="bordered" onPress={() => console.log('Bordered pressed')}>
-                      Bordered
-                    </Button>
+                    <Host>
+                      <Button variant="bordered" onPress={() => console.log('Bordered pressed')}>
+                        Bordered
+                      </Button>
+                    </Host>
                   </View>
                 </View>
                 <View style={{ flexDirection: 'row', gap: 12 }}>
                   <View style={{ flex: 1 }}>
-                    <Button variant="borderless" onPress={() => console.log('Borderless pressed')}>
-                      Borderless
-                    </Button>
+                    <Host>
+                      <Button variant="borderless" onPress={() => console.log('Borderless pressed')}>
+                        Borderless
+                      </Button>
+                    </Host>
                   </View>
                   <View style={{ flex: 1 }}>
-                    <Button variant="plain" onPress={() => console.log('Plain pressed')}>
-                      Plain
-                    </Button>
+                    <Host>
+                      <Button variant="plain" onPress={() => console.log('Plain pressed')}>
+                        Plain
+                      </Button>
+                    </Host>
                   </View>
                 </View>
               </View>
@@ -224,18 +236,22 @@ export function BaseComponentsScreen() {
                 Interactive toggle controls with multiple variants
               </RNText>
               <View style={{ gap: 12 }}>
-                <Switch
-                  value={switchValue}
-                  onValueChange={setSwitchValue}
-                  label="Toggle Switch"
-                  variant="switch"
-                />
-                <Switch
-                  value={switchValue}
-                  onValueChange={setSwitchValue}
-                  label="Checkbox"
-                  variant="checkbox"
-                />
+                <Host>
+                  <Switch
+                    value={switchValue}
+                    onValueChange={setSwitchValue}
+                    label="Toggle Switch"
+                    variant="switch"
+                  />
+                </Host>
+                <Host>
+                  <Switch
+                    value={switchValue}
+                    onValueChange={setSwitchValue}
+                    label="Checkbox"
+                    variant="checkbox"
+                  />
+                </Host>
               </View>
             </View>
 
@@ -245,10 +261,12 @@ export function BaseComponentsScreen() {
               <RNText style={{ fontSize: 14, opacity: 0.7, marginBottom: 4, color: theme.colors.foreground.rgb }}>
                 Continuous value selection
               </RNText>
-              <Slider
-                value={sliderValue}
-                onValueChange={setSliderValue}
-              />
+              <Host>
+                <Slider
+                  value={sliderValue}
+                  onValueChange={setSliderValue}
+                />
+              </Host>
               <RNText style={{ fontSize: 14, opacity: 0.7, color: theme.colors.foreground.rgb }}>
                 Value: {sliderValue.toFixed(2)}
               </RNText>
@@ -265,34 +283,40 @@ export function BaseComponentsScreen() {
                   <RNText style={{ fontSize: 14, fontWeight: '500', opacity: 0.8, color: theme.colors.foreground.rgb }}>
                     Basic Text Field
                   </RNText>
-                  <TextField
-                    defaultValue={textFieldValue}
-                    onChangeText={setTextFieldValue}
-                    placeholder="Enter text here..."
-                  />
+                  <Host>
+                    <TextField
+                      defaultValue={textFieldValue}
+                      onChangeText={setTextFieldValue}
+                      placeholder="Enter text here..."
+                    />
+                  </Host>
                 </View>
 
                 <View style={{ gap: 4 }}>
                   <RNText style={{ fontSize: 14, fontWeight: '500', opacity: 0.8, color: theme.colors.foreground.rgb }}>
                     Email Field
                   </RNText>
-                  <TextField
-                    defaultValue={emailValue}
-                    onChangeText={setEmailValue}
-                    placeholder="your@email.com"
-                    keyboardType="email-address"
-                  />
+                  <Host>
+                    <TextField
+                      defaultValue={emailValue}
+                      onChangeText={setEmailValue}
+                      placeholder="your@email.com"
+                      keyboardType="email-address"
+                    />
+                  </Host>
                 </View>
 
                 <View style={{ gap: 4 }}>
                   <RNText style={{ fontSize: 14, fontWeight: '500', opacity: 0.8, color: theme.colors.foreground.rgb }}>
                     Secure Field (Password)
                   </RNText>
-                  <SecureField
-                    defaultValue={passwordValue}
-                    onChangeText={setPasswordValue}
-                    placeholder="Enter password..."
-                  />
+                  <Host>
+                    <SecureField
+                      defaultValue={passwordValue}
+                      onChangeText={setPasswordValue}
+                      placeholder="Enter password..."
+                    />
+                  </Host>
                 </View>
               </View>
             </View>
@@ -308,13 +332,15 @@ export function BaseComponentsScreen() {
                   <RNText style={{ fontSize: 14, fontWeight: '500', opacity: 0.8, color: theme.colors.foreground.rgb }}>
                     Picker (Menu Style)
                   </RNText>
-                  <Picker
-                    options={['Apple 🍎', 'Banana 🍌', 'Orange 🍊', 'Grape 🍇', 'Watermelon 🍉']}
-                    selectedIndex={selectedFruit}
-                    onOptionSelected={(e) => setSelectedFruit(e.nativeEvent.index)}
-                    label="Choose a fruit"
-                    variant="menu"
-                  />
+                  <Host>
+                    <Picker
+                      options={['Apple 🍎', 'Banana 🍌', 'Orange 🍊', 'Grape 🍇', 'Watermelon 🍉']}
+                      selectedIndex={selectedFruit}
+                      onOptionSelected={(e) => setSelectedFruit(e.nativeEvent.index)}
+                      label="Choose a fruit"
+                      variant="menu"
+                    />
+                  </Host>
                   <RNText style={{ fontSize: 12, opacity: 0.6, color: theme.colors.foreground.rgb }}>
                     Selected index: {selectedFruit}
                   </RNText>
@@ -324,11 +350,13 @@ export function BaseComponentsScreen() {
                   <RNText style={{ fontSize: 14, fontWeight: '500', opacity: 0.8, color: theme.colors.foreground.rgb }}>
                     Date Picker
                   </RNText>
-                  <DateTimePicker
-                    initialDate={selectedDate.toISOString()}
-                    onDateSelected={setSelectedDate}
-                    displayedComponents="dateAndTime"
-                  />
+                  <Host>
+                    <DateTimePicker
+                      initialDate={selectedDate.toISOString()}
+                      onDateSelected={setSelectedDate}
+                      displayedComponents="dateAndTime"
+                    />
+                  </Host>
                   <RNText style={{ fontSize: 12, opacity: 0.6, color: theme.colors.foreground.rgb }}>
                     Selected: {selectedDate.toLocaleString()}
                   </RNText>
@@ -338,11 +366,13 @@ export function BaseComponentsScreen() {
                   <RNText style={{ fontSize: 14, fontWeight: '500', opacity: 0.8, color: theme.colors.foreground.rgb }}>
                     Color Picker
                   </RNText>
-                  <ColorPicker
-                    selection={selectedColor}
-                    onValueChanged={setSelectedColor}
-                    supportsOpacity
-                  />
+                  <Host>
+                    <ColorPicker
+                      selection={selectedColor}
+                      onValueChanged={setSelectedColor}
+                      supportsOpacity
+                    />
+                  </Host>
                   <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}>
                     <View style={{ width: 40, height: 40, backgroundColor: selectedColor, borderRadius: 8, borderWidth: 1, borderColor: theme.colors.border.rgb }} />
                     <RNText style={{ fontSize: 12, opacity: 0.6, color: theme.colors.foreground.rgb }}>
@@ -365,17 +395,19 @@ export function BaseComponentsScreen() {
                     List with Sections
                   </RNText>
                   <Card>
-                    <List>
-                      <Section title="Fruits">
-                        <Text>Apple 🍎</Text>
-                        <Text>Banana 🍌</Text>
-                        <Text>Orange 🍊</Text>
-                      </Section>
-                      <Section title="Vegetables">
-                        <Text>Carrot 🥕</Text>
-                        <Text>Broccoli 🥦</Text>
-                      </Section>
-                    </List>
+                    <Host>
+                      <List>
+                        <Section title="Fruits">
+                          <LabelPrimitive title="Apple 🍎" />
+                          <LabelPrimitive title="Banana 🍌" />
+                          <LabelPrimitive title="Orange 🍊" />
+                        </Section>
+                        <Section title="Vegetables">
+                          <LabelPrimitive title="Carrot 🥕" />
+                          <LabelPrimitive title="Broccoli 🥦" />
+                        </Section>
+                      </List>
+                    </Host>
                   </Card>
                 </View>
 
@@ -384,25 +416,27 @@ export function BaseComponentsScreen() {
                     Form Example
                   </RNText>
                   <Card>
-                    <Form>
-                      <Section title="Profile Information">
-                        <LabeledContent label="Name">
-                          <TextField
-                            defaultValue={formName}
-                            onChangeText={setFormName}
-                            placeholder="Enter your name"
-                          />
-                        </LabeledContent>
-                        <LabeledContent label="Email">
-                          <TextField
-                            defaultValue={formEmail}
-                            onChangeText={setFormEmail}
-                            placeholder="your@email.com"
-                            keyboardType="email-address"
-                          />
-                        </LabeledContent>
-                      </Section>
-                    </Form>
+                    <Host>
+                      <Form>
+                        <Section title="Profile Information">
+                          <LabeledContent label="Name">
+                            <TextField
+                              defaultValue={formName}
+                              onChangeText={setFormName}
+                              placeholder="Enter your name"
+                            />
+                          </LabeledContent>
+                          <LabeledContent label="Email">
+                            <TextField
+                              defaultValue={formEmail}
+                              onChangeText={setFormEmail}
+                              placeholder="your@email.com"
+                              keyboardType="email-address"
+                            />
+                          </LabeledContent>
+                        </Section>
+                      </Form>
+                    </Host>
                   </Card>
                 </View>
 
@@ -415,12 +449,14 @@ export function BaseComponentsScreen() {
                       <RNText style={{ fontSize: 14, color: theme.colors.foreground.rgb }}>
                         All settings are always visible
                       </RNText>
-                      <Switch
-                        value={switchValue}
-                        onValueChange={setSwitchValue}
-                        label="Enable feature"
-                        variant="switch"
-                      />
+                      <Host>
+                        <Switch
+                          value={switchValue}
+                          onValueChange={setSwitchValue}
+                          label="Enable feature"
+                          variant="switch"
+                        />
+                      </Host>
                     </View>
                   </Card>
                 </View>
@@ -442,21 +478,25 @@ export function BaseComponentsScreen() {
                     <View style={{ height: '100%', width: `${progressValue * 100}%`, backgroundColor: theme.colors.foreground.rgb }} />
                   </View>
                   <View style={{ flexDirection: 'row', gap: 8 }}>
-                    <Button
-                      variant="bordered"
-                      onPress={() => setProgressValue(Math.max(0, progressValue - 0.1))}
-                    >
-                      -
-                    </Button>
+                    <Host>
+                      <Button
+                        variant="bordered"
+                        onPress={() => setProgressValue(Math.max(0, progressValue - 0.1))}
+                      >
+                        -
+                      </Button>
+                    </Host>
                     <RNText style={{ fontSize: 14, opacity: 0.7, flex: 1, textAlign: 'center', color: theme.colors.foreground.rgb }}>
                       {Math.round(progressValue * 100)}%
                     </RNText>
-                    <Button
-                      variant="bordered"
-                      onPress={() => setProgressValue(Math.min(1, progressValue + 0.1))}
-                    >
-                      +
-                    </Button>
+                    <Host>
+                      <Button
+                        variant="bordered"
+                        onPress={() => setProgressValue(Math.min(1, progressValue + 0.1))}
+                      >
+                        +
+                      </Button>
+                    </Host>
                   </View>
                 </View>
 
@@ -467,9 +507,13 @@ export function BaseComponentsScreen() {
                   <Card>
                     <View style={{ gap: 0 }}>
                       <RNText style={{ padding: 12, color: theme.colors.foreground.rgb }}>First Item</RNText>
-                      <Divider />
+                      <Host>
+                        <Divider />
+                      </Host>
                       <RNText style={{ padding: 12, color: theme.colors.foreground.rgb }}>Second Item</RNText>
-                      <Divider />
+                      <Host>
+                        <Divider />
+                      </Host>
                       <RNText style={{ padding: 12, color: theme.colors.foreground.rgb }}>Third Item</RNText>
                     </View>
                   </Card>
@@ -479,45 +523,53 @@ export function BaseComponentsScreen() {
                   <RNText style={{ fontSize: 14, fontWeight: '500', opacity: 0.8, color: theme.colors.foreground.rgb }}>
                     Bottom Sheet
                   </RNText>
-                  <Button
-                    variant="default"
-                    onPress={() => setShowBottomSheet(true)}
-                  >
-                    Show Bottom Sheet
-                  </Button>
-                  <BottomSheet
-                    isOpened={showBottomSheet}
-                    onIsOpenedChange={setShowBottomSheet}
-                  >
-                    <View style={{ padding: 20, gap: 16 }}>
-                      <RNText style={{ fontSize: 24, fontWeight: '600', color: theme.colors.foreground.rgb }}>
-                        Bottom Sheet
-                      </RNText>
-                      <RNText style={{ fontSize: 16, opacity: 0.8, color: theme.colors.foreground.rgb }}>
-                        This is a modal bottom sheet. It slides up from the bottom of the screen.
-                      </RNText>
-                      <Button
-                        variant="default"
-                        onPress={() => setShowBottomSheet(false)}
-                      >
-                        Close
-                      </Button>
-                    </View>
-                  </BottomSheet>
+                  <Host>
+                    <Button
+                      variant="default"
+                      onPress={() => setShowBottomSheet(true)}
+                    >
+                      Show Bottom Sheet
+                    </Button>
+                  </Host>
+                  <Host>
+                    <BottomSheet
+                      isOpened={showBottomSheet}
+                      onIsOpenedChange={setShowBottomSheet}
+                    >
+                      <View style={{ padding: 20, gap: 16 }}>
+                        <RNText style={{ fontSize: 24, fontWeight: '600', color: theme.colors.foreground.rgb }}>
+                          Bottom Sheet
+                        </RNText>
+                        <RNText style={{ fontSize: 16, opacity: 0.8, color: theme.colors.foreground.rgb }}>
+                          This is a modal bottom sheet. It slides up from the bottom of the screen.
+                        </RNText>
+                        <Host>
+                          <Button
+                            variant="default"
+                            onPress={() => setShowBottomSheet(false)}
+                          >
+                            Close
+                          </Button>
+                        </Host>
+                      </View>
+                    </BottomSheet>
+                  </Host>
                 </View>
 
                 <View style={{ gap: 4 }}>
                   <RNText style={{ fontSize: 14, fontWeight: '500', opacity: 0.8, color: theme.colors.foreground.rgb }}>
                     Share Link
                   </RNText>
-                  <ShareLink
-                    item="https://expo.dev"
-                    subject="Check out Expo!"
-                  >
-                    <Button variant="bordered">
-                      Share Expo Website
-                    </Button>
-                  </ShareLink>
+                  <Host>
+                    <ShareLink
+                      item="https://expo.dev"
+                      subject="Check out Expo!"
+                    >
+                      <Button variant="bordered">
+                        Share Expo Website
+                      </Button>
+                    </ShareLink>
+                  </Host>
                 </View>
 
                 <View style={{ gap: 4 }}>
@@ -525,11 +577,13 @@ export function BaseComponentsScreen() {
                     Content Unavailable View (Empty State)
                   </RNText>
                   <Card>
-                    <ContentUnavailableView
-                      title="No Data"
-                      description="There's nothing to show here yet."
-                      systemImage="tray"
-                    />
+                    <Host>
+                      <ContentUnavailableView
+                        title="No Data"
+                        description="There's nothing to show here yet."
+                        systemImage="tray"
+                      />
+                    </Host>
                   </Card>
                 </View>
               </View>
@@ -545,7 +599,9 @@ export function BaseComponentsScreen() {
                   <RNText style={{ fontSize: 14, lineHeight: 20, color: theme.colors.mutedForeground.rgb }}>
                     This screen showcases 20+ base components from @expo/ui/swift-ui. The library includes 49+ native SwiftUI components total, including Charts, Gauges, Shapes, and more advanced features.
                   </RNText>
-                  <Divider />
+                  <Host>
+                    <Divider />
+                  </Host>
                   <RNText style={{ fontSize: 14, lineHeight: 20, color: theme.colors.mutedForeground.rgb }}>
                     💡 All components are native iOS SwiftUI views bridged to React Native, providing true native performance and appearance.
                   </RNText>
