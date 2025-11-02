@@ -6,7 +6,11 @@
     "start": "expo start",
     "android": "expo run:android",
     "ios": "expo run:ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "build:ios": "expo export --platform ios",
+    "build:android": "expo export --platform android",
+    "clean": "rm -rf node_modules && yarn install",
+    "clean:cache": "rm -rf .expo && yarn start -c"
   },
   "dependencies": {
     "@expo/ui": "^0.2.0-beta.7",

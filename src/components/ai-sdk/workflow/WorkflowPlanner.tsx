@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import {
   View,
   StyleSheet,
@@ -42,7 +42,7 @@ export interface WorkflowPlannerProps {
  * WorkflowPlanner - Interactive workflow editor component
  * Full drag-drop, pan-zoom, connect nodes functionality
  */
-export function WorkflowPlanner({
+export const WorkflowPlanner = React.memo(function WorkflowPlanner({
   initialWorkflow,
   editable = true,
   onWorkflowChange,
@@ -312,7 +312,7 @@ export function WorkflowPlanner({
               {/* Delete */}
               {(selectedNodeId || selectedEdgeId) && (
                 <TouchableOpacity onPress={deleteSelected} style={[styles.controlButton, styles.deleteButton]}>
-                  <RNText style={[styles.control{ color: '#FFFFFF' }]}>Delete</RNText>
+                  <RNText style={[styles.controlText, { color: '#FFFFFF' }]}>Delete</RNText>
                 </TouchableOpacity>
               )}
             </View>
@@ -429,7 +429,7 @@ export function WorkflowPlanner({
       </View>
     </View>
   );
-}
+});
 
 const styles = StyleSheet.create({
   container: {

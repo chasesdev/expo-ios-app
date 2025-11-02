@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { useColorScheme } from 'react-native';
 import { tokens, lightColors, darkColors } from '../design-system/tokens';
 
@@ -13,17 +14,18 @@ export interface Theme {
 /**
  * Hook to access the current theme based on device color scheme
  * Automatically switches between light and dark mode
+ * Memoized for performance - prevents unnecessary re-renders
  */
 export function useTheme(): Theme {
   const colorScheme = useColorScheme();
   const isDark = colorScheme === 'dark';
 
-  return {
+  return useMemo(() => ({
     colors: isDark ? darkColors : lightColors,
     radius: tokens.radius,
     spacing: tokens.spacing,
     isDark,
-  };
+  }), [isDark]);
 }
 
 /**
