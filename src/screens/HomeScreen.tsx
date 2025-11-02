@@ -46,22 +46,30 @@ export function HomeScreen({ navigation }: HomeScreenProps) {
             <View style={{ gap: 24 }}>
             {/* Header */}
             <View style={{ gap: 8 }}>
-              <Text style={{ fontSize: 36, fontWeight: 'bold' }}>
-                AI SDK UI
-              </Text>
-              <Text style={{ fontSize: 16, opacity: 0.7 }}>
-                Swift UI Components for AI Applications
-              </Text>
+              <Host>
+                <Text style={{ fontSize: 36, fontWeight: 'bold' }}>
+                  AI SDK UI
+                </Text>
+              </Host>
+              <Host>
+                <Text style={{ fontSize: 16, opacity: 0.7 }}>
+                  Swift UI Components for AI Applications
+                </Text>
+              </Host>
             </View>
 
             {/* Workflow Planner Demo */}
             <View style={{ gap: 12 }}>
-              <Text style={{ fontSize: 24, fontWeight: '600' }}>
-                Interactive Workflow Planner
-              </Text>
-              <Text style={{ fontSize: 14, opacity: 0.7 }}>
-                Drag nodes, zoom, pan, and create connections. {showWorkflow ? 'Try the example workflow below!' : 'Click below to load the interactive demo.'}
-              </Text>
+              <Host>
+                <Text style={{ fontSize: 24, fontWeight: '600' }}>
+                  Interactive Workflow Planner
+                </Text>
+              </Host>
+              <Host>
+                <Text style={{ fontSize: 14, opacity: 0.7 }}>
+                  Drag nodes, zoom, pan, and create connections. {showWorkflow ? 'Try the example workflow below!' : 'Click below to load the interactive demo.'}
+                </Text>
+              </Host>
 
               {loading ? (
                 <View style={styles.loadingContainer}>
@@ -96,28 +104,21 @@ export function HomeScreen({ navigation }: HomeScreenProps) {
               ) : null}
             </View>
 
-            {/* Quick Stats */}
+            {/* Component Navigation */}
             <View style={{ gap: 12 }}>
-              <StatCard title="Base UI Components" value="49" />
-              <StatCard title="AI SDK Components" value="30" />
-              <StatCard title="Total Components" value="79" />
-            </View>
-
-            {/* Navigation Cards */}
-            <View style={{ gap: 16 }}>
-              <NavigationCard
+              <StatCard
                 title="Design System"
-                description="Colors, typography, spacing, and design tokens"
+                value="🎨"
                 onPress={() => navigation.navigate('DesignSystem')}
               />
-              <NavigationCard
+              <StatCard
                 title="Base UI Components"
-                description="Buttons, inputs, cards, and foundational components"
+                value="49"
                 onPress={() => navigation.navigate('BaseComponents')}
               />
-              <NavigationCard
+              <StatCard
                 title="AI SDK Components"
-                description="Message, Conversation, Canvas, Plan, and AI-specific components"
+                value="30"
                 onPress={() => navigation.navigate('AIComponents')}
               />
             </View>
@@ -129,16 +130,18 @@ export function HomeScreen({ navigation }: HomeScreenProps) {
   );
 }
 
-function StatCard({ title, value }: { title: string; value: string }) {
+function StatCard({ title, value, onPress }: { title: string; value: string; onPress: () => void }) {
   const theme = useTheme();
 
   return (
-    <View
-      style={[
+    <Pressable
+      onPress={onPress}
+      style={({ pressed }) => [
         styles.statCard,
         {
           backgroundColor: theme.colors.card.rgb,
           borderColor: theme.colors.border.rgb,
+          opacity: pressed ? 0.7 : 1,
         },
       ]}
     >
@@ -147,39 +150,6 @@ function StatCard({ title, value }: { title: string; value: string }) {
       </RNText>
       <RNText style={[styles.statTitle, { color: theme.colors.mutedForeground.rgb }]}>
         {title}
-      </RNText>
-    </View>
-  );
-}
-
-function NavigationCard({
-  title,
-  description,
-  onPress,
-}: {
-  title: string;
-  description: string;
-  onPress: () => void;
-}) {
-  const theme = useTheme();
-
-  return (
-    <Pressable
-      onPress={onPress}
-      style={({ pressed }) => [
-        styles.navCard,
-        {
-          backgroundColor: theme.colors.card.rgb,
-          borderColor: theme.colors.border.rgb,
-          opacity: pressed ? 0.7 : 1,
-        },
-      ]}
-    >
-      <RNText style={[styles.navTitle, { color: theme.colors.foreground.rgb }]}>
-        {title}
-      </RNText>
-      <RNText style={[styles.navDescription, { color: theme.colors.mutedForeground.rgb }]}>
-        {description}
       </RNText>
     </Pressable>
   );
@@ -205,19 +175,6 @@ const styles = StyleSheet.create({
   statTitle: {
     fontSize: 14,
     marginTop: 4,
-  },
-  navCard: {
-    padding: 20,
-    borderRadius: 12,
-    borderWidth: 1,
-  },
-  navTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    marginBottom: 4,
-  },
-  navDescription: {
-    fontSize: 14,
   },
   loadButton: {
     padding: 20,
