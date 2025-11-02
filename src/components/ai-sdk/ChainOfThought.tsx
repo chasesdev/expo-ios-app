@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheetTouchableOpacity , Text as RNText} from 'react-native';
+import { View, StyleSheet, Text as RNText, TouchableOpacity} from 'react-native';
 import { Host } from '../common/SwiftUIHost';
 import { useTheme } from '../../design-system';
 import { GlassCard } from '../ui/glass';
@@ -97,6 +97,7 @@ export function ChainOfThought({
 
             return (
               <TouchableOpacity
+                activeOpacity={canExpand || onStepPress ? 0.7 : 1}
                 key={step.id}
                 onPress={() => {
                   if (canExpand) {
@@ -104,23 +105,25 @@ export function ChainOfThought({
                   }
                   onStepPress?.(step.id);
                 }}
-                activeOpacity={canExpand || onStepPress ? 0.7 : 1}
               >
                 <Host
                   modifiers={[
                     {
                       type: 'background',
                       color: theme.colors.muted.rgb,
+                      $type: 'background' as const,
                     },
                     {
                       type: 'cornerRadius',
                       radius: theme.radius.md,
+                      $type: 'cornerRadius' as const,
                     },
                     {
                       type: 'border',
                       color: theme.colors.border.rgb,
                       width: 1,
                       opacity: 0.5,
+                      $type: 'border' as const,
                     },
                   ]}
                   style={{ padding: 12 }}
@@ -134,10 +137,12 @@ export function ChainOfThought({
                           {
                             type: 'background',
                             color: theme.colors.primary.rgb,
+                            $type: 'background' as const,
                           },
                           {
                             type: 'cornerRadius',
                             radius: 12,
+                            $type: 'cornerRadius' as const,
                           },
                         ]}
                         style={{
@@ -237,16 +242,19 @@ export function ChainOfThought({
               {
                 type: 'background',
                 color: theme.colors.primary.rgb + '15',
+                $type: 'background' as const,
               },
               {
                 type: 'cornerRadius',
                 radius: theme.radius.md,
+                $type: 'cornerRadius' as const,
               },
               {
                 type: 'border',
                 color: theme.colors.primary.rgb,
                 width: 1,
                 opacity: 0.3,
+                $type: 'border' as const,
               },
             ]}
             style={{ padding: 12 }}
@@ -255,7 +263,7 @@ export function ChainOfThought({
               <RNText style={[styles.conclusionTitle, { color: theme.colors.primary.rgb }]}>
                 💡 Conclusion
               </RNText>
-              <RNText style={[styles.conclusion{ color: theme.colors.foreground.rgb }]}>
+              <RNText style={[styles.conclusionText, { color: theme.colors.foreground.rgb }]}>
                 {data.finalConclusion}
               </RNText>
             </View>

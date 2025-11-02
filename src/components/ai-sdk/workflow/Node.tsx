@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheetTouchableOpacity , Text as RNText} from 'react-native';
+import { View, StyleSheet, Text as RNText, TouchableOpacity} from 'react-native';
 import { Host } from '../../common/SwiftUIHost';
 import { useTheme } from '../../../design-system';
 import { NodeData, NodeType, NodeStatus } from './types';
@@ -87,20 +87,14 @@ export function WorkflowNode({
       >
         <Host
           modifiers={[
-            { type: 'background', color: config.bgColor },
-            { type: 'cornerRadius', radius: node.type === 'decision' ? 8 : theme.radius.lg },
+            { type: 'background', color: config.bgColor, $type: 'background' as const },
+            { type: 'cornerRadius', radius: node.type === 'decision' ? 8 : theme.radius.lg, $type: 'cornerRadius' as const },
             {
               type: 'border',
               color: selected ? theme.colors.primary.rgb : config.color,
               width: selected ? 3 : 2,
               opacity: selected ? 1 : 0.5,
-            },
-            {
-              type: 'shadow',
-              color: '#00000020',
-              radius: selected ? 12 : 8,
-              x: 0,
-              y: selected ? 6 : 4,
+              $type: 'border' as const,
             },
           ]}
           style={{
@@ -108,7 +102,7 @@ export function WorkflowNode({
             transform: node.type === 'decision' ? [{ rotate: '45deg' }] : undefined,
           }}
         >
-          <VStack spacing={8} style={node.type === 'decision' ? { transform: [{ rotate: '-45deg' }] } : {}}>
+          <View style={{ gap: 8, transform: node.type === 'decision' ? [{ rotate: '-45deg' }] : undefined }}>
               {/* Header */}
               <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}>
                 <RNText style={{ fontSize: 18 }}>{config.icon}</RNText>
@@ -140,7 +134,7 @@ export function WorkflowNode({
               {/* Code Preview */}
               {node.type === 'code' && node.data.code && (
                 <View style={[styles.codeBlock, { backgroundColor: theme.colors.background.rgb }]}>
-                  <RNText style={[styles.code{ color: theme.colors.foreground.rgb }]} numberOfLines={3}>
+                  <RNText style={[styles.codeText, { color: theme.colors.foreground.rgb }]} numberOfLines={3}>
                     {node.data.code}
                   </RNText>
                 </View>
