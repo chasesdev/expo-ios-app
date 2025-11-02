@@ -81,7 +81,7 @@ export interface MessageProps {
  * />
  * ```
  */
-export function Message({
+export const Message = React.memo(function Message({
   id,
   role,
   content,
@@ -535,7 +535,7 @@ export function Message({
       </View>
     </Host>
   );
-}
+});
 
 const styles = StyleSheet.create({
   textInput: {

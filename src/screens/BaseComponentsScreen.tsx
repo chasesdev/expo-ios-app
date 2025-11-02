@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, ScrollView as RN , Text as RNText} from 'react-native';
-import { Button, Switch, SliderField, SecureField, Picker, DateTimePicker, ColorPicker, List, Section, Form, DisclosureGroup, LabeledContent, Progress, Divider, ContentUnavailableView, ShareLink, BottomSheet } from '@expo/ui/swift-ui';
+import { Button, Switch, Slider, SecureField, Picker, DateTimePicker, ColorPicker, List, Section, Form, LabeledContent, Divider, ContentUnavailableView, ShareLink, BottomSheet, Text, TextField } from '@expo/ui/swift-ui';
 import { Host } from '../components/common/SwiftUIHost';
 import { useTheme } from '../design-system';
 import { GlassCard, GlassButton } from '../components/ui/glass';
@@ -27,7 +27,6 @@ export function BaseComponentsScreen() {
   // Form states
   const [formName, setFormName] = useState('');
   const [formEmail, setFormEmail] = useState('');
-  const [disclosureExpanded, setDisclosureExpanded] = useState(false);
 
   // Advanced component states
   const [showBottomSheet, setShowBottomSheet] = useState(false);
@@ -35,25 +34,25 @@ export function BaseComponentsScreen() {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.background.rgb }]}>
-      <ScrollView contentContainerStyle={styles.scrollContent}>
+      <RN contentContainerStyle={styles.scrollContent}>
         <Host style={{ padding: 20 }}>
           <View style={{ gap: 32 }}>
             {/* Header */}
             <View style={{ gap: 8 }}>
-              <Text style={{ fontSize: 28, fontWeight: '600' }}>
+              <RNText style={{ fontSize: 28, fontWeight: '600', color: theme.colors.foreground.rgb }}>
                 Base UI Components
-              </Text>
-              <Text style={{ fontSize: 14, opacity: 0.7 }}>
+              </RNText>
+              <RNText style={{ fontSize: 14, opacity: 0.7, color: theme.colors.foreground.rgb }}>
                 Foundational components using @expo/ui/swift-ui
-              </Text>
+              </RNText>
             </View>
 
             {/* Glass Effects Section - NEW! */}
             <View style={{ gap: 16 }}>
               <RNText style={{ fontSize: 20, fontWeight: '600', lineHeight: 26, marginBottom: 8, color: theme.colors.foreground.rgb }}>Glass Effects ✨</RNText>
-              <Text style={{ fontSize: 14, opacity: 0.7, marginBottom: 4 }}>
+              <RNText style={{ fontSize: 14, opacity: 0.7, marginBottom: 4, color: theme.colors.foreground.rgb }}>
                 iOS 26 glass morphism with 6 material variants: ultraThin, thin, regular, thick, ultraThick, and bar
-              </Text>
+              </RNText>
 
               {/* Accessibility Status */}
               {reduceTransparency && (
@@ -61,7 +60,7 @@ export function BaseComponentsScreen() {
                   backgroundColor: theme.colors.muted.rgb,
                   borderColor: theme.colors.border.rgb
                 }]}>
-                  <RNText style={[styles.notice{ color: theme.colors.foreground.rgb }]}>
+                  <RNText style={[styles.noticeText, { color: theme.colors.foreground.rgb }]}>
                     ℹ️ "Reduce Transparency" is enabled. Glass effects use solid colors.
                   </RNText>
                 </View>
@@ -187,25 +186,33 @@ export function BaseComponentsScreen() {
             {/* Standard Buttons */}
             <View style={{ gap: 16 }}>
               <RNText style={{ fontSize: 20, fontWeight: '600', lineHeight: 26, marginBottom: 8, color: theme.colors.foreground.rgb }}>Standard Buttons</RNText>
-              <Text style={{ fontSize: 14, opacity: 0.7, marginBottom: 4 }}>
+              <RNText style={{ fontSize: 14, opacity: 0.7, marginBottom: 4, color: theme.colors.foreground.rgb }}>
                 Native SwiftUI button variants
-              </Text>
+              </RNText>
               <View style={{ gap: 12 }}>
                 <View style={{ flexDirection: 'row', gap: 12 }}>
-                  <Button variant="default" onPress={() => console.log('Default pressed')} style={{ flex: 1 }}>
-                    Default
-                  </Button>
-                  <Button variant="bordered" onPress={() => console.log('Bordered pressed')} style={{ flex: 1 }}>
-                    Bordered
-                  </Button>
+                  <View style={{ flex: 1 }}>
+                    <Button variant="default" onPress={() => console.log('Default pressed')}>
+                      Default
+                    </Button>
+                  </View>
+                  <View style={{ flex: 1 }}>
+                    <Button variant="bordered" onPress={() => console.log('Bordered pressed')}>
+                      Bordered
+                    </Button>
+                  </View>
                 </View>
                 <View style={{ flexDirection: 'row', gap: 12 }}>
-                  <Button variant="borderless" onPress={() => console.log('Borderless pressed')} style={{ flex: 1 }}>
-                    Borderless
-                  </Button>
-                  <Button variant="plain" onPress={() => console.log('Plain pressed')} style={{ flex: 1 }}>
-                    Plain
-                  </Button>
+                  <View style={{ flex: 1 }}>
+                    <Button variant="borderless" onPress={() => console.log('Borderless pressed')}>
+                      Borderless
+                    </Button>
+                  </View>
+                  <View style={{ flex: 1 }}>
+                    <Button variant="plain" onPress={() => console.log('Plain pressed')}>
+                      Plain
+                    </Button>
+                  </View>
                 </View>
               </View>
             </View>
@@ -213,9 +220,9 @@ export function BaseComponentsScreen() {
             {/* Switches & Toggles */}
             <View style={{ gap: 16 }}>
               <RNText style={{ fontSize: 20, fontWeight: '600', lineHeight: 26, marginBottom: 8, color: theme.colors.foreground.rgb }}>Switches & Toggles</RNText>
-              <Text style={{ fontSize: 14, opacity: 0.7, marginBottom: 4 }}>
+              <RNText style={{ fontSize: 14, opacity: 0.7, marginBottom: 4, color: theme.colors.foreground.rgb }}>
                 Interactive toggle controls with multiple variants
-              </Text>
+              </RNText>
               <View style={{ gap: 12 }}>
                 <Switch
                   value={switchValue}
@@ -235,57 +242,55 @@ export function BaseComponentsScreen() {
             {/* Slider */}
             <View style={{ gap: 16 }}>
               <RNText style={{ fontSize: 20, fontWeight: '600', lineHeight: 26, marginBottom: 8, color: theme.colors.foreground.rgb }}>Slider</RNText>
-              <Text style={{ fontSize: 14, opacity: 0.7, marginBottom: 4 }}>
+              <RNText style={{ fontSize: 14, opacity: 0.7, marginBottom: 4, color: theme.colors.foreground.rgb }}>
                 Continuous value selection
-              </Text>
+              </RNText>
               <Slider
                 value={sliderValue}
                 onValueChange={setSliderValue}
               />
-              <Text style={{ fontSize: 14, opacity: 0.7 }}>
+              <RNText style={{ fontSize: 14, opacity: 0.7, color: theme.colors.foreground.rgb }}>
                 Value: {sliderValue.toFixed(2)}
-              </Text>
+              </RNText>
             </View>
 
             {/* Text Inputs */}
             <View style={{ gap: 16 }}>
               <RNText style={{ fontSize: 20, fontWeight: '600', lineHeight: 26, marginBottom: 8, color: theme.colors.foreground.rgb }}>Text Inputs</RNText>
-              <Text style={{ fontSize: 14, opacity: 0.7, marginBottom: 4 }}>
+              <RNText style={{ fontSize: 14, opacity: 0.7, marginBottom: 4, color: theme.colors.foreground.rgb }}>
                 Native text fields with various keyboard types and secure input
-              </Text>
+              </RNText>
               <View style={{ gap: 12 }}>
                 <View style={{ gap: 4 }}>
-                  <Text style={{ fontSize: 14, fontWeight: '500', opacity: 0.8 }}>
+                  <RNText style={{ fontSize: 14, fontWeight: '500', opacity: 0.8, color: theme.colors.foreground.rgb }}>
                     Basic Text Field
-                  </Text>
+                  </RNText>
                   <TextField
-                    value={textFieldValue}
-                    onValueChange={setTextFieldValue}
+                    defaultValue={textFieldValue}
+                    onChangeText={setTextFieldValue}
                     placeholder="Enter text here..."
                   />
                 </View>
 
                 <View style={{ gap: 4 }}>
-                  <Text style={{ fontSize: 14, fontWeight: '500', opacity: 0.8 }}>
+                  <RNText style={{ fontSize: 14, fontWeight: '500', opacity: 0.8, color: theme.colors.foreground.rgb }}>
                     Email Field
-                  </Text>
+                  </RNText>
                   <TextField
-                    value={emailValue}
-                    onValueChange={setEmailValue}
+                    defaultValue={emailValue}
+                    onChangeText={setEmailValue}
                     placeholder="your@email.com"
-                    textContentType="emailAddress"
-                    keyboardType="emailAddress"
-                    autocapitalizationType="none"
+                    keyboardType="email-address"
                   />
                 </View>
 
                 <View style={{ gap: 4 }}>
-                  <Text style={{ fontSize: 14, fontWeight: '500', opacity: 0.8 }}>
+                  <RNText style={{ fontSize: 14, fontWeight: '500', opacity: 0.8, color: theme.colors.foreground.rgb }}>
                     Secure Field (Password)
-                  </Text>
+                  </RNText>
                   <SecureField
-                    value={passwordValue}
-                    onValueChange={setPasswordValue}
+                    defaultValue={passwordValue}
+                    onChangeText={setPasswordValue}
                     placeholder="Enter password..."
                   />
                 </View>
@@ -295,14 +300,14 @@ export function BaseComponentsScreen() {
             {/* Selection Components */}
             <View style={{ gap: 16 }}>
               <RNText style={{ fontSize: 20, fontWeight: '600', lineHeight: 26, marginBottom: 8, color: theme.colors.foreground.rgb }}>Selection Components</RNText>
-              <Text style={{ fontSize: 14, opacity: 0.7, marginBottom: 4 }}>
+              <RNText style={{ fontSize: 14, opacity: 0.7, marginBottom: 4, color: theme.colors.foreground.rgb }}>
                 Pickers for values, dates, and colors
-              </Text>
+              </RNText>
               <View style={{ gap: 12 }}>
                 <View style={{ gap: 4 }}>
-                  <Text style={{ fontSize: 14, fontWeight: '500', opacity: 0.8 }}>
+                  <RNText style={{ fontSize: 14, fontWeight: '500', opacity: 0.8, color: theme.colors.foreground.rgb }}>
                     Picker (Menu Style)
-                  </Text>
+                  </RNText>
                   <Picker
                     options={['Apple 🍎', 'Banana 🍌', 'Orange 🍊', 'Grape 🍇', 'Watermelon 🍉']}
                     selectedIndex={selectedFruit}
@@ -310,29 +315,29 @@ export function BaseComponentsScreen() {
                     label="Choose a fruit"
                     variant="menu"
                   />
-                  <Text style={{ fontSize: 12, opacity: 0.6 }}>
+                  <RNText style={{ fontSize: 12, opacity: 0.6, color: theme.colors.foreground.rgb }}>
                     Selected index: {selectedFruit}
-                  </Text>
+                  </RNText>
                 </View>
 
                 <View style={{ gap: 4 }}>
-                  <Text style={{ fontSize: 14, fontWeight: '500', opacity: 0.8 }}>
+                  <RNText style={{ fontSize: 14, fontWeight: '500', opacity: 0.8, color: theme.colors.foreground.rgb }}>
                     Date Picker
-                  </Text>
+                  </RNText>
                   <DateTimePicker
                     initialDate={selectedDate.toISOString()}
                     onDateSelected={setSelectedDate}
                     displayedComponents="dateAndTime"
                   />
-                  <Text style={{ fontSize: 12, opacity: 0.6 }}>
+                  <RNText style={{ fontSize: 12, opacity: 0.6, color: theme.colors.foreground.rgb }}>
                     Selected: {selectedDate.toLocaleString()}
-                  </Text>
+                  </RNText>
                 </View>
 
                 <View style={{ gap: 4 }}>
-                  <Text style={{ fontSize: 14, fontWeight: '500', opacity: 0.8 }}>
+                  <RNText style={{ fontSize: 14, fontWeight: '500', opacity: 0.8, color: theme.colors.foreground.rgb }}>
                     Color Picker
-                  </Text>
+                  </RNText>
                   <ColorPicker
                     selection={selectedColor}
                     onValueChanged={setSelectedColor}
@@ -340,9 +345,9 @@ export function BaseComponentsScreen() {
                   />
                   <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}>
                     <View style={{ width: 40, height: 40, backgroundColor: selectedColor, borderRadius: 8, borderWidth: 1, borderColor: theme.colors.border.rgb }} />
-                    <Text style={{ fontSize: 12, opacity: 0.6 }}>
+                    <RNText style={{ fontSize: 12, opacity: 0.6, color: theme.colors.foreground.rgb }}>
                       {selectedColor}
-                    </Text>
+                    </RNText>
                   </View>
                 </View>
               </View>
@@ -351,59 +356,49 @@ export function BaseComponentsScreen() {
             {/* Lists & Forms */}
             <View style={{ gap: 16 }}>
               <RNText style={{ fontSize: 20, fontWeight: '600', lineHeight: 26, marginBottom: 8, color: theme.colors.foreground.rgb }}>Lists & Forms</RNText>
-              <Text style={{ fontSize: 14, opacity: 0.7, marginBottom: 4 }}>
+              <RNText style={{ fontSize: 14, opacity: 0.7, marginBottom: 4, color: theme.colors.foreground.rgb }}>
                 Structured data display with sections and form layouts
-              </Text>
+              </RNText>
               <View style={{ gap: 12 }}>
                 <View style={{ gap: 4 }}>
-                  <Text style={{ fontSize: 14, fontWeight: '500', opacity: 0.8 }}>
+                  <RNText style={{ fontSize: 14, fontWeight: '500', opacity: 0.8, color: theme.colors.foreground.rgb }}>
                     List with Sections
-                  </Text>
+                  </RNText>
                   <Card>
                     <List>
-                      <Section header="Fruits">
-                        <List.Row>
-                          <Text>Apple 🍎</Text>
-                        </List.Row>
-                        <List.Row>
-                          <Text>Banana 🍌</Text>
-                        </List.Row>
-                        <List.Row>
-                          <Text>Orange 🍊</Text>
-                        </List.Row>
+                      <Section title="Fruits">
+                        <Text>Apple 🍎</Text>
+                        <Text>Banana 🍌</Text>
+                        <Text>Orange 🍊</Text>
                       </Section>
-                      <Section header="Vegetables">
-                        <List.Row>
-                          <Text>Carrot 🥕</Text>
-                        </List.Row>
-                        <List.Row>
-                          <Text>Broccoli 🥦</Text>
-                        </List.Row>
+                      <Section title="Vegetables">
+                        <Text>Carrot 🥕</Text>
+                        <Text>Broccoli 🥦</Text>
                       </Section>
                     </List>
                   </Card>
                 </View>
 
                 <View style={{ gap: 4 }}>
-                  <Text style={{ fontSize: 14, fontWeight: '500', opacity: 0.8 }}>
+                  <RNText style={{ fontSize: 14, fontWeight: '500', opacity: 0.8, color: theme.colors.foreground.rgb }}>
                     Form Example
-                  </Text>
+                  </RNText>
                   <Card>
                     <Form>
-                      <Section header="Profile Information">
+                      <Section title="Profile Information">
                         <LabeledContent label="Name">
                           <TextField
-                            value={formName}
-                            onValueChange={setFormName}
+                            defaultValue={formName}
+                            onChangeText={setFormName}
                             placeholder="Enter your name"
                           />
                         </LabeledContent>
                         <LabeledContent label="Email">
                           <TextField
-                            value={formEmail}
-                            onValueChange={setFormEmail}
+                            defaultValue={formEmail}
+                            onChangeText={setFormEmail}
                             placeholder="your@email.com"
-                            keyboardType="emailAddress"
+                            keyboardType="email-address"
                           />
                         </LabeledContent>
                       </Section>
@@ -412,27 +407,21 @@ export function BaseComponentsScreen() {
                 </View>
 
                 <View style={{ gap: 4 }}>
-                  <Text style={{ fontSize: 14, fontWeight: '500', opacity: 0.8 }}>
-                    Disclosure Group (Collapsible)
-                  </Text>
+                  <RNText style={{ fontSize: 14, fontWeight: '500', opacity: 0.8, color: theme.colors.foreground.rgb }}>
+                    Advanced Settings
+                  </RNText>
                   <Card>
-                    <DisclosureGroup
-                      isExpanded={disclosureExpanded}
-                      onToggle={() => setDisclosureExpanded(!disclosureExpanded)}
-                      label="Advanced Settings"
-                    >
-                      <View style={{ padding: 12, gap: 8 }}>
-                        <Text style={{ fontSize: 14 }}>
-                          Hidden content that appears when expanded
-                        </Text>
-                        <Switch
-                          value={switchValue}
-                          onValueChange={setSwitchValue}
-                          label="Enable feature"
-                          variant="switch"
-                        />
-                      </View>
-                    </DisclosureGroup>
+                    <View style={{ padding: 12, gap: 8 }}>
+                      <RNText style={{ fontSize: 14, color: theme.colors.foreground.rgb }}>
+                        All settings are always visible
+                      </RNText>
+                      <Switch
+                        value={switchValue}
+                        onValueChange={setSwitchValue}
+                        label="Enable feature"
+                        variant="switch"
+                      />
+                    </View>
                   </Card>
                 </View>
               </View>
@@ -441,15 +430,17 @@ export function BaseComponentsScreen() {
             {/* Advanced Components */}
             <View style={{ gap: 16 }}>
               <RNText style={{ fontSize: 20, fontWeight: '600', lineHeight: 26, marginBottom: 8, color: theme.colors.foreground.rgb }}>Advanced Components</RNText>
-              <Text style={{ fontSize: 14, opacity: 0.7, marginBottom: 4 }}>
+              <RNText style={{ fontSize: 14, opacity: 0.7, marginBottom: 4, color: theme.colors.foreground.rgb }}>
                 Progress indicators, sheets, sharing, and empty states
-              </Text>
+              </RNText>
               <View style={{ gap: 12 }}>
                 <View style={{ gap: 4 }}>
-                  <Text style={{ fontSize: 14, fontWeight: '500', opacity: 0.8 }}>
+                  <RNText style={{ fontSize: 14, fontWeight: '500', opacity: 0.8, color: theme.colors.foreground.rgb }}>
                     Progress Indicator
-                  </Text>
-                  <Progress value={progressValue} />
+                  </RNText>
+                  <View style={{ height: 8, backgroundColor: theme.colors.muted.rgb, borderRadius: 4, overflow: 'hidden' }}>
+                    <View style={{ height: '100%', width: `${progressValue * 100}%`, backgroundColor: theme.colors.foreground.rgb }} />
+                  </View>
                   <View style={{ flexDirection: 'row', gap: 8 }}>
                     <Button
                       variant="bordered"
@@ -457,9 +448,9 @@ export function BaseComponentsScreen() {
                     >
                       -
                     </Button>
-                    <Text style={{ fontSize: 14, opacity: 0.7, flex: 1, textAlign: 'center' }}>
+                    <RNText style={{ fontSize: 14, opacity: 0.7, flex: 1, textAlign: 'center', color: theme.colors.foreground.rgb }}>
                       {Math.round(progressValue * 100)}%
-                    </Text>
+                    </RNText>
                     <Button
                       variant="bordered"
                       onPress={() => setProgressValue(Math.min(1, progressValue + 0.1))}
@@ -470,24 +461,24 @@ export function BaseComponentsScreen() {
                 </View>
 
                 <View style={{ gap: 4 }}>
-                  <Text style={{ fontSize: 14, fontWeight: '500', opacity: 0.8 }}>
+                  <RNText style={{ fontSize: 14, fontWeight: '500', opacity: 0.8, color: theme.colors.foreground.rgb }}>
                     Divider
-                  </Text>
+                  </RNText>
                   <Card>
                     <View style={{ gap: 0 }}>
-                      <Text style={{ padding: 12 }}>First Item</Text>
+                      <RNText style={{ padding: 12, color: theme.colors.foreground.rgb }}>First Item</RNText>
                       <Divider />
-                      <Text style={{ padding: 12 }}>Second Item</Text>
+                      <RNText style={{ padding: 12, color: theme.colors.foreground.rgb }}>Second Item</RNText>
                       <Divider />
-                      <Text style={{ padding: 12 }}>Third Item</Text>
+                      <RNText style={{ padding: 12, color: theme.colors.foreground.rgb }}>Third Item</RNText>
                     </View>
                   </Card>
                 </View>
 
                 <View style={{ gap: 4 }}>
-                  <Text style={{ fontSize: 14, fontWeight: '500', opacity: 0.8 }}>
+                  <RNText style={{ fontSize: 14, fontWeight: '500', opacity: 0.8, color: theme.colors.foreground.rgb }}>
                     Bottom Sheet
-                  </Text>
+                  </RNText>
                   <Button
                     variant="default"
                     onPress={() => setShowBottomSheet(true)}
@@ -499,12 +490,12 @@ export function BaseComponentsScreen() {
                     onIsOpenedChange={setShowBottomSheet}
                   >
                     <View style={{ padding: 20, gap: 16 }}>
-                      <Text style={{ fontSize: 24, fontWeight: '600' }}>
+                      <RNText style={{ fontSize: 24, fontWeight: '600', color: theme.colors.foreground.rgb }}>
                         Bottom Sheet
-                      </Text>
-                      <Text style={{ fontSize: 16, opacity: 0.8 }}>
+                      </RNText>
+                      <RNText style={{ fontSize: 16, opacity: 0.8, color: theme.colors.foreground.rgb }}>
                         This is a modal bottom sheet. It slides up from the bottom of the screen.
-                      </Text>
+                      </RNText>
                       <Button
                         variant="default"
                         onPress={() => setShowBottomSheet(false)}
@@ -516,9 +507,9 @@ export function BaseComponentsScreen() {
                 </View>
 
                 <View style={{ gap: 4 }}>
-                  <Text style={{ fontSize: 14, fontWeight: '500', opacity: 0.8 }}>
+                  <RNText style={{ fontSize: 14, fontWeight: '500', opacity: 0.8, color: theme.colors.foreground.rgb }}>
                     Share Link
-                  </Text>
+                  </RNText>
                   <ShareLink
                     item="https://expo.dev"
                     subject="Check out Expo!"
@@ -530,9 +521,9 @@ export function BaseComponentsScreen() {
                 </View>
 
                 <View style={{ gap: 4 }}>
-                  <Text style={{ fontSize: 14, fontWeight: '500', opacity: 0.8 }}>
+                  <RNText style={{ fontSize: 14, fontWeight: '500', opacity: 0.8, color: theme.colors.foreground.rgb }}>
                     Content Unavailable View (Empty State)
-                  </Text>
+                  </RNText>
                   <Card>
                     <ContentUnavailableView
                       title="No Data"
@@ -563,7 +554,7 @@ export function BaseComponentsScreen() {
             </View>
           </View>
         </Host>
-      </ScrollView>
+      </RN>
     </View>
   );
 }

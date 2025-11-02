@@ -53,7 +53,13 @@ export function useGlassOptimization(): GlassOptimizationResult {
   const [reduceTransparency, setReduceTransparency] = useState(false);
 
   // Check device capability
-  const iosVersion = Platform.OS === 'ios' ? Platform.Version : 0;
+  const rawIosVersion = Platform.OS === 'ios' ? Platform.Version : 0;
+  // Ensure we always compare numbers to numbers.
+  const iosVersion =
+    typeof rawIosVersion === 'string'
+      ? parseInt(rawIosVersion.split('.')[0], 10)
+      : rawIosVersion;
+
   const isCapable = iosVersion >= glassRequirements.minimumIOSVersion;
   const supportsAdvanced = iosVersion >= glassRequirements.advancedIOSVersion;
 

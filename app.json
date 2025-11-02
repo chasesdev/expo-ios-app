@@ -16,6 +16,7 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.expo.iosapp",
       "deploymentTarget": "16.0",
+      "jsEngine": "hermes",
       "infoPlist": {
         "UIBackgroundModes": ["fetch"],
         "NSCameraUsageDescription": "This app uses the camera for capturing images in the PromptInput component.",
@@ -29,6 +30,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.expo.iosapp",
+      "jsEngine": "hermes",
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false
     },

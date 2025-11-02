@@ -1,6 +1,7 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useMemo } from 'react';
 import { Host } from '../common/SwiftUIHost';
-import { ScrollView, RefreshControl, KeyboardAvoidingView, Platform, View } from 'react-native';
+import { FlatList, RefreshControl, KeyboardAvoidingView, Platform, View } from 'react-native';
+import { Text } from '@expo/ui/swift-ui';
 import { useTheme } from '../../design-system';
 import { Message, MessageProps } from './Message';
 
@@ -38,7 +39,7 @@ export interface ConversationProps {
  * />
  * ```
  */
-export function Conversation({
+export const Conversation = React.memo(function Conversation({
   messages,
   layout = 'chat',
   showTypingIndicator = false,
@@ -56,23 +57,90 @@ export function Conversation({
   testID,
 }: ConversationProps) {
   const theme = useTheme();
-  const scrollViewRef = useRef<ScrollView>(null);
+  const flatListRef = useRef<FlatList>(null);
 
   // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
     if (autoScroll && messages.length > 0) {
       setTimeout(() => {
-        scrollViewRef.current?.scrollToEnd({ animated: true });
+        flatListRef.current?.scrollToEnd({ animated: true });
       }, 100);
     }
   }, [messages.length, autoScroll]);
 
-  // Group messages by date
-  const groupedMessages = groupByDate ? groupMessagesByDate(messages) : { Today: messages };
+  // Flatten messages with date headers for FlatList
+  const flattenedData = useMemo(() => {
+    if (!groupByDate) {
+      return messages.map(msg => ({ type: 'message' as const, data: msg }));
+    }
+
+    const grouped = groupMessagesByDate(messages);
+    const items: Array<{ type: 'date' | 'message'; data: any }> = [];
+
+    Object.entries(grouped).forEach(([date, dateMessages]) => {
+      if (messages.length > 0) {
+        items.push({ type: 'date', data: date });
+      }
+      dateMessages.forEach(msg => {
+        items.push({ type: 'message', data: msg });
+      });
+    });
+
+    return items;
+  }, [messages, groupByDate]);
 
   // Handle message actions
   const handleMessageAction = (messageId: string, action: string) => {
     onMessageAction?.(messageId, action);
+  };
+
+  const messageVariant = layout === 'chat' ? 'compact' : layout;
+
+  // Render item function for FlatList
+  const renderItem = ({ item }: { item: { type: 'date' | 'message'; data: any } }) => {
+    if (item.type === 'date') {
+      return (
+        <Host
+          modifiers={[
+            {
+              type: 'background',
+              color: theme.colors.muted.rgb,
+            },
+            { type: 'cornerRadius', radius: theme.radius.sm },
+          ]}
+          style={{
+            paddingHorizontal: 12,
+            paddingVertical: 4,
+            alignSelf: 'center',
+            marginVertical: 8,
+          }}
+        >
+          <Text style={{ fontSize: 11, fontWeight: '600', color: theme.colors.mutedForeground.rgb }}>
+            {item.data}
+          </Text>
+        </Host>
+      );
+    }
+
+    // Render message
+    const message = item.data as MessageProps;
+    return (
+      <Message
+        key={message.id}
+        {...message}
+        variant={messageVariant}
+        showAvatar={showAvatars}
+        showTimestamp={showTimestamps}
+        onCopy={() => handleMessageAction(message.id, 'copy')}
+        onEdit={(content) => handleMessageAction(message.id, `edit:${content}`)}
+        onDelete={() => handleMessageAction(message.id, 'delete')}
+        onReact={(reaction) => handleMessageAction(message.id, `react:${reaction}`)}
+        onBookmark={() => handleMessageAction(message.id, 'bookmark')}
+        onFlag={() => handleMessageAction(message.id, 'flag')}
+        onShare={() => handleMessageAction(message.id, 'share')}
+        onRetry={() => handleMessageAction(message.id, 'retry')}
+      />
+    );
   };
 
   // Empty state
@@ -104,8 +172,6 @@ export function Conversation({
     );
   }
 
-  const messageVariant = layout === 'chat' ? 'compact' : layout;
-
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
@@ -113,90 +179,62 @@ export function Conversation({
       keyboardVerticalOffset={100}
     >
       <Host testID={testID} style={{ flex: 1, backgroundColor: theme.colors.background.rgb }}>
-        <ScrollView
-          ref={scrollViewRef}
-          contentContainerStyle={{ padding: theme.spacing.md, paddingBottom: theme.spacing.xl }}
+        <FlatList
+          ref={flatListRef}
+          data={flattenedData}
+          renderItem={renderItem}
+          keyExtractor={(item, index) =>
+            item.type === 'message' ? item.data.id : `date-${index}`
+          }
+          contentContainerStyle={{
+            padding: theme.spacing.md,
+            paddingBottom: theme.spacing.xl,
+            gap: layout === 'minimal' ? 8 : 16
+          }}
           refreshControl={
             onRefresh ? (
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             ) : undefined
           }
-        >
-          <View style={{ gap: layout === 'minimal' ? 8 : 16 }}>
-            {Object.entries(groupedMessages).map(([date, dateMessages]) => (
-              <VStack key={date} spacing={layout === 'minimal' ? 8 : 12}>
-                {groupByDate && messages.length > 0 && (
-                  <Host
-                    modifiers={[
-                      {
-                        type: 'background',
-                        color: theme.colors.muted.rgb,
-                      },
-                      { type: 'cornerRadius', radius: theme.radius.sm },
-                    ]}
-                    style={{
-                      paddingHorizontal: 12,
-                      paddingVertical: 4,
-                      alignSelf: 'center',
-                      marginVertical: 8,
-                    }}
-                  >
-                    <Text style={{ fontSize: 11, fontWeight: '600', color: theme.colors.mutedForeground.rgb }}>
-                      {date}
-                    </Text>
-                  </Host>
-                )}
+          ListFooterComponent={
+            <>
+              {/* Typing Indicator */}
+              {showTypingIndicator && (
+                <Host
+                  modifiers={[
+                    {
+                      type: 'background',
+                      color: theme.colors.muted.rgb,
+                    },
+                    { type: 'cornerRadius', radius: theme.radius.md },
+                  ]}
+                  style={{ padding: theme.spacing.sm, alignSelf: 'flex-start', marginTop: 12 }}
+                >
+                  <TypingIndicator />
+                </Host>
+              )}
 
-                {dateMessages.map((message) => (
-                  <Message
-                    key={message.id}
-                    {...message}
-                    variant={messageVariant}
-                    showAvatar={showAvatars}
-                    showTimestamp={showTimestamps}
-                    onCopy={() => handleMessageAction(message.id, 'copy')}
-                    onEdit={(content) => handleMessageAction(message.id, `edit:${content}`)}
-                    onDelete={() => handleMessageAction(message.id, 'delete')}
-                    onReact={(reaction) => handleMessageAction(message.id, `react:${reaction}`)}
-                    onBookmark={() => handleMessageAction(message.id, 'bookmark')}
-                    onFlag={() => handleMessageAction(message.id, 'flag')}
-                    onShare={() => handleMessageAction(message.id, 'share')}
-                    onRetry={() => handleMessageAction(message.id, 'retry')}
-                  />
-                ))}
-              </View>
-            ))}
-
-            {/* Typing Indicator */}
-            {showTypingIndicator && (
-              <Host
-                modifiers={[
-                  {
-                    type: 'background',
-                    color: theme.colors.muted.rgb,
-                  },
-                  { type: 'cornerRadius', radius: theme.radius.md },
-                ]}
-                style={{ padding: theme.spacing.sm, alignSelf: 'flex-start' }}
-              >
-                <TypingIndicator />
-              </Host>
-            )}
-
-            {/* Loading State */}
-            {isLoading && (
-              <Host style={{ alignItems: 'center', padding: theme.spacing.md }}>
-                <Text style={{ fontSize: 13, color: theme.colors.mutedForeground.rgb }}>
-                  Loading messages...
-                </Text>
-              </Host>
-            )}
-          </View>
-        </ScrollView>
+              {/* Loading State */}
+              {isLoading && (
+                <Host style={{ alignItems: 'center', padding: theme.spacing.md }}>
+                  <Text style={{ fontSize: 13, color: theme.colors.mutedForeground.rgb }}>
+                    Loading messages...
+                  </Text>
+                </Host>
+              )}
+            </>
+          }
+          // Performance optimizations
+          removeClippedSubviews={true}
+          maxToRenderPerBatch={10}
+          updateCellsBatchingPeriod={50}
+          initialNumToRender={20}
+          windowSize={21}
+        />
       </Host>
     </KeyboardAvoidingView>
   );
-}
+});
 
 /**
  * Animated typing indicator (three dots)
